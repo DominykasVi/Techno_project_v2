@@ -1,0 +1,26 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #dee2d6;
+}
+h1, h2,#b{
+    text-align: center;
+    color: #758ECD;
+}
+h1{
+    font-size: 100px;
+}
+h2{
+    word-spacing: 70px;
+    font-size: 50px;
+}
+#main{
+    text-align: center;
+    height: 720px;
+    width: 1280px;
+}
+#b{
+    font-size: 45px;
+    padding: 0;
+    border: none;
+    background: none;
+}

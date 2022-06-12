@@ -1,0 +1,246 @@
+html,
+body {
+  background-color: #f3f8f2;
+  height: 100%;
+}
+input {
+  max-width: 100%;
+  max-height: 100%;
+}
+#profile_pic {
+  border-radius: 50%;
+  max-width: 100%;
+  max-height: 100%;
+}
+#weightInput,
+#exercise {
+  border-radius: 25px;
+  width: 100%;
+  height: 50px;
+  padding-left: 0px;
+  margin-left: 0px;
+  border: 1px solid #707070;
+  text-align: center;
+}
+/* Profile */
+#profileContainer {
+  padding: 0px;
+}
+
+#profileTop {
+  border-right: 2px solid #3581b8;
+  height: 33%;
+}
+#profileSocial {
+  border-right: 2px solid #3581b8;
+  height: 12%;
+}
+#profileCenter {
+  border-right: 2px solid #3581b8;
+  border-top: 2px solid #3581b8;
+  border-bottom: 2px solid #3581b8;
+
+  height: 25%;
+}
+#profileBottom {
+  border-right: 2px solid #3581b8;
+  height: 30%;
+}
+#addWeightButton,
+#addButton,
+#followButton {
+  background: #758ecd;
+  color: #f3f8f2;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 25px;
+  width: 100%;
+  height: 40px;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+
+  font-size: 25px;
+}
+#addWeightButton,
+#addButton {
+  height: 50px;
+  width: 80%;
+}
+#recomendationDiv {
+  height: 100%;
+}
+#recomendationText {
+  text-align: center;
+  color: #707070;
+  font-size: 20px;
+}
+#recomendedWeight {
+  text-align: center;
+  position: relative;
+  top: -30px;
+  left: 0px;
+  color: #707070;
+  font-size: 35px;
+}
+#followDiv {
+  margin-bottom: 13px;
+}
+#status,
+#statusButton,
+#statusButtonOne,
+#statusButtonTwo,
+#statusButtonThree {
+  background-color: white;
+  border: 1px solid #707070;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 50%;
+}
+#statusButtonOne {
+  background-color: #32cd32;
+}
+#statusButtonTwo {
+  background-color: #ffff00;
+}
+#statusButtonThree {
+  background-color: #ff0000;
+}
+#status {
+  background-color: #32cd32;
+}
+#exerciseImage {
+  width: 150%;
+  height: auto;
+  border-radius: 50%;
+  border: 1px solid #707070;
+}
+#dropdownButton {
+  border-radius: 25px;
+  width: 100%;
+  height: 50px;
+  border: 1px solid #707070;
+  text-align: center;
+  color: #758ecd;
+  background-color: white;
+}
+#dropDownMenu {
+  color: #758ecd;
+}
+#addExerciseFormContainer {
+  padding-bottom: 20px;
+}
+#historyContainer {
+  height: 80%;
+}
+#historyRow {
+  height: 95%;
+}
+#exerciseList {
+  width: 100%;
+  height: 90%;
+}
+#historyButton {
+  border: 1px solid #707070;
+  background-color: #758ecd;
+  height: 50px;
+  width: 60%;
+  color: white;
+  text-align: center;
+  position: relative;
+  font-size: 30px;
+}
+
+.profileInfo {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 37px;
+  background-color: #758ecd;
+  color: #f3f8f2;
+  border-radius: 25px;
+  width: 80%;
+  height: 50px;
+  text-align: left;
+  padding-left: 15px;
+  margin-top: 10px;
+}
+.default-avatar,
+.member-overlap-item {
+  height: 50px;
+  width: 50px;
+  float: right;
+}
+.member-overlap-item {
+  margin-right: -10px;
+  border: 2px solid #fff;
+}
+.bigText {
+  font-size: 40px;
+  color: #758ecd;
+  padding-left: 15px;
+}
+.historyText {
+  font-size: 28px;
+  color: #758ecd;
+  text-align: center;
+}
+
+.exerciseInfo {
+  margin-top: 15px;
+  text-align: center;
+  color: #707070;
+  height: 40px;
+  background-color: #ffffff;
+  border-radius: 25px;
+  vertical-align: center;
+  border: 1px solid #707070;
+  font-size: 22px;
+  padding: 3px;
+}
+
+.dropbtn {
+  background-color: white;
+  border: 1px solid #707070;
+  color: white;
+  padding: 20px;
+  border-radius: 50%;
+  /* margin: 100px 30px; */
+}
+
+.dropup {
+  position: absolute;
+  display: inline-block;
+}
+
+.one {
+  display: none;
+  position: absolute;
+  /* bottom: 245px; */
+  bottom: 40%;
+  margin: 10px;
+  left: 3px;
+  background-color: transparent;
+}
+
+.two {
+  display: none;
+  position: absolute;
+  left: 65px;
+  /* bottom: 203px; */
+  bottom: 34%;
+  background-color: transparent;
+}
+
+.three {
+  display: none;
+  position: absolute;
+  /* bottom: 150px; */
+  bottom: 26%;
+  left: 14px;
+  background-color: transparent;
+}

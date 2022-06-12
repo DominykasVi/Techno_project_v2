@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="Project.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="main" class="clearfix">
+      <div id="coll">
+        <img id="arrow" src="Resources/left-arrow.png" />
+        <h1>History</h1>
+
+        <div style="display: inline">
+          <div style="float: left">
+            <img id="icon" src="Resources/history.png" />
+          </div>
+          <div>
+            <h2>Exercise Date Status</h2>
+          </div>
+        </div>
+
+        <!--One row for the history list-->
+        <div style="display: inline">
+          <div style="float: left">
+            <img id="icon" src="Resources/run.png" />
+          </div>
+          <div style="display: inline">
+            <div id="exercise" style="float: left">Running</div>
+            <div id="date" style="float: left">26th Apr</div>
+            <div id="green" class="status" style="float: right"></div>
+          </div>
+        </div>
+        <!--single row finishes here-->
+        <div style="display: inline">
+          <div style="float: left">
+            <img id="icon" src="Resources/tenis.png" />
+          </div>
+          <div style="display: inline">
+            <div id="exercise" style="float: left">Tenis</div>
+            <div id="date" style="float: left">1th May</div>
+            <div id="red" class="status" style="float: right"></div>
+          </div>
+        </div>
+
+        <div style="display: inline">
+          <div style="float: left">
+            <img id="icon" src="Resources/volleyball.png" />
+          </div>
+          <div style="display: inline">
+            <div id="exercise" style="float: left">Volleyball</div>
+            <div id="date" style="float: left">15th May</div>
+            <div id="yellow" class="status" style="float: right"></div>
+          </div>
+        </div>
+      </div>
+      <div id="colr">
+        <div id="main_slider" class="clearfix">
+          <div id="coll_slider">Exercises</div>
+          <div id="colr_slider">Graphs</div>
+        </div>
+
+        <!--this is the first big div of "Exercises" tab-->
+        <div id="main_pie" class="clearfix">
+          <div id="coll_pie">
+            <img id="pie" src="Resources/pie.png" />
+          </div>
+
+          <div id="colr_status">
+            <div style="float: left">
+              <br />
+              Your <br />
+              Statistics
+            </div>
+            <div>
+              <img id="your_statistics" src="Resources/trend.png" />
+            </div>
+          </div>
+        </div>
+        <br />
+        <!--this is the second div of "Exercises" tab-->
+        <div id="graph_number">
+          <div id="line_div" style="float: left">
+            <img id="line_graph" src="Resources/line-graph.png" />
+            <img id="line_graph" src="Resources/line-graph.png" />
+          </div>
+          <div id="num" style="float: right">
+            <div style="float: left">
+              <img id="hash" src="Resources/hash.png" />
+            </div>
+            <div id="number_text">No</div>
+          </div>
+        </div>
+
+        <!--This is the div showed when "choose exercise" is clicked-->
+        <div id="about_exercise">
+          <div id="info_about_exercise">
+            <div id="info_div" style="float: left">
+              Calories
+              <h4>1100</h4>
+              kcal
+            </div>
+            <div id="info_div" style="float: right">
+              Time spent
+              <h4>4</h4>
+              minutes
+            </div>
+            <div id="info_div" style="float: left">
+              Effort grade
+              <h4>10/10</h4>
+            </div>
+            <div id="info_div" style="float: right">
+              Status
+              <img id="load_char" src="Resources/round-chart.png" />
+            </div>
+          </div>
+          <div id="pilates">
+            <img id="pilates_img" src="Resources/pilates.png" />
+          </div>
+          <br />
+
+          <div id="about_exercise_text">
+            <h3>About the exercise</h3>
+            <p>
+              This is some random notes about the exercise the user inputed. How
+              did he feel during the exercises? Likes and dislikes. Would he
+              like to repeat the exercise?...
+            </p>
+          </div>
+        </div>
+
+        <!--this is the last button div of "Exercises" tab-->
+        <br />
+        <div id="choose_exercise">Choose exercise</div>
+
+        <!--this is the first big div of "Graphs" tab-->
+        <div id="main_graph">
+          <div id="graph_text" style="float: left">Graph</div>
+          <div>
+            <img id="big_graph" src="Resources/big-graph.png" />
+          </div>
+        </div>
+        <br />
+
+        <!--this is the second div of "Graphs" tab-->
+        <div id="graph_number_2">
+          <div id="statistics_text" style="float: left">Statistics</div>
+
+          <div style="float: left">
+            <img id="line_graph_2" src="Resources/bar-graph.png" />
+          </div>
+          <div style="float: right">
+            <img id="line_graph_2" src="Resources/line-graph.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        $("#main_pie").show();
+        $("#graph_number").show();
+        $("#choose_exercise").show();
+        $("#about_exercise").hide();
+        $("#about_exercise_text").hide();
+        $("#main_graph").hide();
+        $("#graph_number_2").hide();
+      });
+
+      $(document).ready(function () {
+        $("#coll_slider").click(function () {
+          $("#main_pie").show();
+          $("#graph_number").show();
+          $("#choose_exercise").show();
+          $("#main_graph").hide();
+          $("#graph_number_2").hide();
+          $("#about_exercise").hide();
+          $("#about_exercise_text").hide();
+          $("#colr_slider").css("background-color", "white");
+          $("#coll_slider").css("background-color", "#EDE6F2");
+          $("#choose_exercise").text("Choose exercise");
+        });
+      });
+
+      $(document).ready(function () {
+        $("#coll_slider").hover(
+          function () {
+            $(this).css("background-color", "#CAB9D6");
+          },
+          function () {
+            if ($("#main_pie").is(":hidden")) {
+              $(this).css("background-color", "white");
+            } else {
+              $(this).css("background-color", "#EDE6F2");
+            }
+          }
+        );
+      });
+
+      $(document).ready(function () {
+        $("#colr_slider").click(function () {
+          $("#coll_slider").css("background-color", "white");
+          $("#colr_slider").css("background-color", "#EDE6F2");
+          $("#main_pie").hide();
+          $("#graph_number").hide();
+          $("#choose_exercise").hide();
+          $("#about_exercise").hide();
+          $("#about_exercise_text").hide();
+          $("#main_graph").show();
+          $("#graph_number_2").show();
+        });
+      });
+
+      $(document).ready(function () {
+        $("#colr_slider").hover(
+          function () {
+            $(this).css("background-color", "#CAB9D6");
+          },
+          function () {
+            if ($("#main_graph").is(":hidden")) {
+              //ovdje promijeni coll_pie u element sa druge stranice
+              $(this).css("background-color", "white");
+            } else {
+              $(this).css("background-color", "#EDE6F2");
+            }
+          }
+        );
+      });
+
+      $(document).ready(function () {
+        $("#choose_exercise").hover(
+          function () {
+            $(this).css("background-color", "#CAB9D6");
+          },
+          function () {
+            $(this).css("background-color", "#EDE6F2");
+          }
+        );
+      });
+
+      $(document).ready(function () {
+        $("#choose_exercise").click(function () {
+          if (this.innerHTML === "Choose exercise") {
+            $("#main_pie").hide();
+            $("#graph_number").hide();
+            $("#about_exercise").show();
+            $("#about_exercise_text").show();
+            this.innerHTML = "Exit exercise";
+          } else {
+            $("#main_pie").show();
+            $("#graph_number").show();
+            $("#about_exercise").hide();
+            $("#about_exercise_text").hide();
+            this.innerHTML = "Choose exercise";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
