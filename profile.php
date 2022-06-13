@@ -1,8 +1,24 @@
 <?php
+// TODO:
+// add feedback that succesfully inserted
+// add form input checks
 include 'config.php';
 // temp code
 session_start(); 
-$_SESSION['id'] = 1
+$_SESSION['id'] = 1;
+$id = $_SESSION['id'];
+
+$sql = "SELECT * FROM weights WHERE user_id=$id ORDER BY id DESC LIMIT 1 ";
+$result = $db->query($sql);
+
+$weightRow = $result->fetch_assoc();
+
+$sql = "SELECT * FROM users WHERE id=$id";
+$result = $db->query($sql);
+$userRow = $result->fetch_assoc();
+
+// print_r($userRow['height']);
+// print $row['weigth']
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,9 +62,12 @@ $_SESSION['id'] = 1
               </div>
 
               <div class="col-sm-7">
-                <p class="profileInfo">188 cm</p>
-                <p class="profileInfo">90 kg</p>
-                <p class="profileInfo">25.5</p>
+                <input class="profileInfo" 
+                        value="<?php print $userRow['height']?> cm"
+                        onchange="updateHeight()"
+                        id="height"></input>
+                <p class="profileInfo" id="weight"><?php print $weightRow['weight'] ?></p>
+                <p class="profileInfo" id="BMI"></p>
               </div>
             </div>
             <div class="row align-items-center" id="profileSocial">
@@ -97,11 +116,13 @@ $_SESSION['id'] = 1
               </div>
               <div class="col-6" id="recomendationDiv">
                 <p id="recomendationText">Recommended weight:</p>
-                <p id="recomendedWeight">87 kg</p>
+                <p id="recomendedWeight"></p>
               </div>
             </div>
             <div class="row align-items-center" id="profileCenter">
-              <form >
+              <!-- <form method="POST" action="db_manager.php"> -->
+              <form>
+
                 <input name="function" type="hidden" value="insertExercise"></input>
                 <p class="bigText">Add exercise</p>
                 <div class="container" id="addExerciseFormContainer">
@@ -147,7 +168,7 @@ $_SESSION['id'] = 1
                       </div>
                     </div>
                     <div class="col-lg-3">
-                      <button type="button" id="addButton" onclick="submitForm()" >Add</button>
+                      <button type="button" id="addButton" onclick="submitForm(status)">Add</button>
                     </div>
                     <div>
                       <div class="one">
@@ -168,6 +189,7 @@ $_SESSION['id'] = 1
               <form>
             </div>
             <div class="row align-items-center" id="profileBottom">
+              <form action=''>
               <p class="bigText">Add weight</p>
               <div class="container">
                 <div class="row align-items-center">
@@ -179,10 +201,11 @@ $_SESSION['id'] = 1
                     />
                   </div>
                   <div class="col-lg-3">
-                    <button type="button" id="addWeightButton">Add</button>
+                    <button type="button" id="addWeightButton" onclick="submitWeight()">Add</button>
                   </div>
                 </div>
               </div>
+              </form>
             </div>
           </div>
         </div>
@@ -233,6 +256,7 @@ $_SESSION['id'] = 1
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     var status = -1;
+    window.onload = updateBMI();
     function colorChange(value){
       showButton();
       switch (value) {
@@ -255,6 +279,7 @@ $_SESSION['id'] = 1
           status = -1;
           $(".dropbtn").css("background-color", "white");
       }
+
     }
 
     function showButton(){
@@ -269,12 +294,12 @@ $_SESSION['id'] = 1
       2: "Done"
     }
     function submitForm(){
-      var status = statusDict[status];
+      var statusForm = statusDict[status];
       var exercise = $("#exercise").val();
       var location = $("#location").val();
       var people = $("#people").val();
 
-      var dataString = 'status=' + status + '&location=' + location + '&people=' + people + '&exercise=' + exercise;
+      var dataString = 'function=insertExercise&status=' + statusForm + '&location=' + location + '&people=' + people + '&exercise=' + exercise;
       if(status==-1 || exercise=='')
       {
           alert("Please fill in all fields");
@@ -282,17 +307,77 @@ $_SESSION['id'] = 1
       else
       {
           // Ajax code to submit form.
-          console.log("made it here")
+          $.ajax({
+              type: "POST",
+              url: "db_manager.php",
+              data: dataString,
+              // success: function(result){
+              //     alert(result);
+              // }
+          });
+      }
+      return false;
+    }
+
+    function submitWeight(){
+      var weight = parseFloat($("#weightInput").val());
+      var dataString = 'function=insertWeight&weight=' + weight;
+      if(weight==='' || weight==null)
+      {
+          alert("Please fill in weight");
+      }
+      else
+      {
+          // Ajax code to submit form.
           $.ajax({
               type: "POST",
               url: "db_manager.php",
               data: dataString,
               success: function(result){
                   alert(result);
+                  window.location.reload() 
               }
           });
       }
       return false;
+    }
+    function updateHeight(){
+      var height = parseFloat($("#height").val());
+      // console.log(parseFloat(height))
+      var dataString = 'function=updateHeight&height=' + height;
+      if(height==='' || height==null)
+      {
+          alert("Please fill in weight");
+      }
+      else
+      {
+          // Ajax code to submit form.
+          $.ajax({
+              type: "POST",
+              url: "db_manager.php",
+              data: dataString,
+              success: function(result){
+                  alert(result);
+                  window.location.reload() 
+              }
+          });
+      }
+      return false;
+    }
+    function updateBMI(){
+      var weight = (parseFloat($("#weight").text()));
+      var height = (parseFloat($("#height").val())/100);
+      // while (weight == '' || height==''){
+      //   weight = $("#weightInput").val();
+      //   height = (parseFloat($("#height").val())/100);
+
+      // }
+      
+      var bmi = (weight / (height * height)).toFixed(1);;
+      $('#BMI').text(bmi);
+
+      var recomendedWeight = (20 * (height*height)).toFixed(1);;
+      $('#recomendedWeight').text(recomendedWeight);
     }
   </script>
 </html>

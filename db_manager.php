@@ -10,6 +10,12 @@ switch ($_REQUEST["function"]){
     case "insertExercise":
         insertExercise($db);
         break;
+    case "insertWeight":
+        insertWeight($db);
+        break;
+    case "updateHeight":
+        updateHeight($db);
+        break;
 }
 
 function insertExercise($db){
@@ -20,14 +26,14 @@ function insertExercise($db){
     $status=$_REQUEST['status'];
     $exercise=$exercises[$_REQUEST['exercise']];
 
-    if($_REQUEST['people'] = "location"){
+    if($_REQUEST['location'] != ""){
         $location=$_REQUEST['location'];
     } else {
         echo "location not set;";
 
         $location=" ";
     }
-    if($_REQUEST['people'] = ""){
+    if($_REQUEST['people'] != ""){
         $people=$_REQUEST['people'];
     } else {
         echo "people not set;";
@@ -40,6 +46,50 @@ function insertExercise($db){
     VALUES ($id, $exercise, '$location', $people, '$status')";
 
     echo $sql;
+    if ($db->query($sql) === TRUE) {
+        $last_id = $db->insert_id;
+        echo "Success";
+    } else {
+        echo "Error: " . $sql . "<br>" . $db->error;
+    }
+}
+
+function insertWeight($db){
+    $id=$_SESSION['id'];
+
+    if($_REQUEST['weight'] != ""){
+        $weight=$_REQUEST['weight'];
+    } else {
+        echo "weight not set;";
+        return false;
+    }
+    $date = date('Y-m-d');
+
+    echo $_REQUEST['weight'];
+    $sql = "INSERT INTO weights (user_id, weight, date) 
+    VALUES ($id, $weight, '$date')";
+
+    if ($db->query($sql) === TRUE) {
+        $last_id = $db->insert_id;
+        echo "Success";
+    } else {
+        echo "Error: " . $sql . "<br>" . $db->error;
+    }
+}
+function updateHeight($db){
+    $id=$_SESSION['id'];
+
+    if($_REQUEST['height'] != ""){
+        $height=$_REQUEST['height'];
+    } else {
+        echo "height not set;";
+        return false;
+    }
+    // $date = date('Y-m-d');
+
+    // echo $_REQUEST['weight'];
+    $sql = "UPDATE users SET `height`=$height WHERE id=$id";
+
     if ($db->query($sql) === TRUE) {
         $last_id = $db->insert_id;
         echo "Success";
