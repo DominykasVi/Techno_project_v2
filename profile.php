@@ -381,7 +381,6 @@ $userRow = $result->fetch_assoc();
           status = 2;
           break;
         default:
-          status = -1;
           $(".dropbtn").css("background-color", "white");
       }
 
@@ -403,9 +402,10 @@ $userRow = $result->fetch_assoc();
       var exercise = $("#exercise").val();
       var location = $("#location").val();
       var people = $("#people").val();
-
+      console.log(status)
       var dataString = 'function=insertExercise&status=' + statusForm + '&location=' + location + '&people=' + people + '&exercise=' + exercise;
-      if(status==-1 || exercise=='')
+
+      if($(".dropbtn").css( "background-color" )=== "rgb(255, 255, 255)" || exercise=='')
       {
           alert("Please fill in all fields");
       }
@@ -416,23 +416,25 @@ $userRow = $result->fetch_assoc();
               type: "POST",
               url: "db_manager.php",
               data: dataString,
-              // success: function(result){
-              //     alert(result);
-              // }
+              success: function(result){
+                alert("Exercises have been updated");
+              }
           });
       }
       return false;
     }
 
     function submitWeight(){
-      var weight = parseFloat($("#weightInput").val());
-      var dataString = 'function=insertWeight&weight=' + weight;
+      var weight = $("#weightInput").val();
       if(weight==='' || weight==null)
       {
           alert("Please fill in weight");
       }
       else
       {
+        var weight = parseFloat(weight);
+        var dataString = 'function=insertWeight&weight=' + weight;
+
           // Ajax code to submit form.
           $.ajax({
               type: "POST",
@@ -440,7 +442,7 @@ $userRow = $result->fetch_assoc();
               data: dataString,
               success: function(result){
                   alert(result);
-                  window.location.reload() 
+                  // window.location.reload() 
               }
           });
       }
