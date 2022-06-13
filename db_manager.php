@@ -1,6 +1,5 @@
 <?php
 include 'config.php';
-
 // Check connection
 print_r($_REQUEST);
 session_start(); 
@@ -19,12 +18,20 @@ switch ($_REQUEST["function"]){
 }
 
 function insertExercise($db){
-    $exercises = [
-        "bench press" => "1"
-    ];
+    $sql = "SELECT * FROM exercises";
+    $exerciseResults = $db->query($sql);
+    $exerciseDict = [];
+    if ($exerciseResults->num_rows > 0) {
+      // output data of each row
+        while($row = $exerciseResults->fetch_assoc()) {
+            // echo $row['id'] . $row['name']. $row['image_link'];
+            $exerciseDict[$row['name']] = $row['id'];
+            // print_r($exercideDict);
+        }
+    }
     $id=$_SESSION['id'];
     $status=$_REQUEST['status'];
-    $exercise=$exercises[$_REQUEST['exercise']];
+    $exercise=$exerciseDict[$_REQUEST['exercise']];
 
     if($_REQUEST['location'] != ""){
         $location=$_REQUEST['location'];

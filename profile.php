@@ -227,7 +227,79 @@ $userRow = $result->fetch_assoc();
                   class="row align-items-center my-0"
                 >
                   <!-- TODO: cahnge to shape with color property, js or php? -->
-                  <div class="col-sm-1">
+                  <?php
+                  $sql = "SELECT * FROM exercises";
+                  $exerciseResults = $db->query($sql);
+                  $exerciseDict = [];
+                  if ($exerciseResults->num_rows > 0) {
+                    // output data of each row
+                      while($row = $exerciseResults->fetch_assoc()) {
+                        // echo $row['id'] . $row['name']. $row['image_link'];
+                        $exerciseDict[$row['id']] = [$row['name'], $row['image_link']];
+                        // print_r($exercideDict);
+                      }
+                    }
+                  // print_r($exerciseDict);
+
+                  $sql = "SELECT id, exercise_id, location, people, status FROM
+                  history WHERE user_id=$id ORDER BY id DESC LIMIT 6";
+                  $historyResults = $db->query($sql);
+                  if ($historyResults->num_rows > 0) {
+                  // output data of each row
+                    while($row = $historyResults->fetch_assoc()) {
+                      printImage($exerciseDict[$row['exercise_id']][1]);
+                      printName($exerciseDict[$row['exercise_id']][0]);
+                      printGeneral($row['location']);
+                      printGeneral($row['people']);
+                      printStatus($row['status']);
+                    }
+                  } else {
+                    echo "0 results";
+                  }
+                  $db->close();
+
+                  function printImage($img){
+                    echo '<div class="col-sm-1">';
+                    echo '<img id="exerciseImage" src="';
+                    echo $img;
+                    echo '"></img>';
+                    echo '</div>';
+
+                  }
+
+                  function printName($name){
+                    echo '<div class="col-sm-4 historyText">';
+                    echo '<p class="exerciseInfo">';
+                    echo $name;
+                    echo '</p>';
+                    echo '</div>';
+                  }
+
+                  function printGeneral($general){
+                    echo '<div class="col-sm-3 historyText">';
+                    echo '<p class="exerciseInfo">';
+                    echo $general;
+                    echo '</p>';
+                    echo '</div>';
+                  }
+                  
+                  function printStatus($status){
+                    $statusDict = [
+                      "Not completed" => "#ff0000",
+                      "In progress" => "#ffff00",
+                      "Done" => "#32cd32"
+                    ];
+
+                    echo '<div class="col-sm-1">';
+                    echo '<div id="status"';
+                    echo 'style="background-color:';
+                    echo $statusDict[$status];
+                    echo '"';
+                    echo '></div>';
+                    echo '</div>';
+                  }
+                  ?>
+                  <!-- <div class="col-sm-1">
                     <img id="exerciseImage" src="Resources/fitness.png"></img>
                   </div>
                   <div class="col-sm-4 historyText">
@@ -241,7 +313,7 @@ $userRow = $result->fetch_assoc();
                   </div>
                   <div class="col-sm-1">
                     <div id="status"></div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
