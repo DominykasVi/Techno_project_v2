@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 12, 2022 at 09:33 PM
+-- Generation Time: Jun 13, 2022 at 08:25 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.5
 
@@ -38,7 +38,8 @@ CREATE TABLE `exercises` (
 --
 
 INSERT INTO `exercises` (`id`, `name`, `image_link`) VALUES
-(1, 'Bench Press', 'https://cdn-icons-png.flaticon.com/512/2548/2548440.png');
+(1, 'Bench Press', 'https://cdn-icons-png.flaticon.com/512/2548/2548440.png'),
+(2, 'Squat', 'https://cdn-icons-png.flaticon.com/512/3043/3043290.png');
 
 -- --------------------------------------------------------
 
@@ -62,7 +63,12 @@ CREATE TABLE `history` (
 INSERT INTO `history` (`id`, `user_id`, `exercise_id`, `location`, `people`, `status`) VALUES
 (2, 1, 1, '', 1, 'In progress'),
 (3, 1, 1, '', 1, 'In progress'),
-(4, 1, 1, '', 1, 'In progress');
+(4, 1, 1, '', 1, 'In progress'),
+(7, 1, 1, 'home', 1, 'In progress'),
+(8, 1, 1, ' ', 1, 'In progress'),
+(9, 1, 1, 'home', 3, 'In progress'),
+(10, 1, 2, 'Outside', 3, 'Done'),
+(11, 1, 2, 'Home', 1, 'Done');
 
 -- --------------------------------------------------------
 
@@ -75,6 +81,15 @@ CREATE TABLE `relationships` (
   `follower` int(11) NOT NULL,
   `following` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `relationships`
+--
+
+INSERT INTO `relationships` (`id`, `follower`, `following`) VALUES
+(1, 4, 1),
+(2, 2, 1),
+(3, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -90,16 +105,18 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `custom_id` varchar(30) NOT NULL,
   `image` varchar(200) NOT NULL,
-  `weight` int(11) NOT NULL,
-  `height` int(11) NOT NULL
+  `height` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `custom_id`, `image`, `weight`, `height`) VALUES
-(1, 'user', 'user', 'user', 'pass', 'user#1', '', 80, 180);
+INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `custom_id`, `image`, `height`) VALUES
+(1, 'user', 'user', 'user', 'pass', 'user#1', '', 181.3),
+(2, 'cutie', 'cuteAlien', 'cutie', 'cutie', '', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWb8K3oCadfjT91q1nyuzUHR4QjzVQYIDTvw&usqp=CAU', 60),
+(3, 'yoda', 'babyYoda', 'yoda', 'yoda', '', 'https://media.vanityfair.com/photos/5eb06b3ec135d48f5b12097d/4:3/w_1116,h_837,c_limit/baby-yoda-craze.jpg', 120),
+(4, 'cuteBot', 'Bot', 'bot', 'bot', '', 'https://cellularnews.com/wp-content/uploads/2020/05/58-star-wars-a-cute-bb-8-artwork-325x485.jpg', 90);
 
 -- --------------------------------------------------------
 
@@ -110,8 +127,25 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `custom_id`,
 CREATE TABLE `weights` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `weight` int(4) NOT NULL
+  `weight` double NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `weights`
+--
+
+INSERT INTO `weights` (`id`, `user_id`, `weight`, `date`) VALUES
+(1, 1, 87.5, '0000-00-00'),
+(2, 1, 87.5, '0000-00-00'),
+(3, 1, 20, '2022-06-01'),
+(4, 1, 40, '2022-06-13'),
+(5, 1, 87.5, '2022-06-13'),
+(6, 1, 33, '2022-06-13'),
+(7, 1, 22, '2022-06-13'),
+(8, 1, 12, '2022-06-13'),
+(9, 1, 22, '2022-06-13'),
+(10, 1, 85, '2022-06-13');
 
 --
 -- Indexes for dumped tables
@@ -159,31 +193,31 @@ ALTER TABLE `weights`
 -- AUTO_INCREMENT for table `exercises`
 --
 ALTER TABLE `exercises`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `relationships`
 --
 ALTER TABLE `relationships`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `weights`
 --
 ALTER TABLE `weights`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
