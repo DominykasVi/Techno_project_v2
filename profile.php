@@ -58,7 +58,7 @@ $userRow = $result->fetch_assoc();
           <div class="container-fluid h-100" id="profileContainer">
             <div class="row align-items-center" id="profileTop">
               <div class="col-sm-5">
-                <img src="Resources/profile_pic.png" id="profile_pic" />
+                <img src="Resources/profile_pic.png" id="profile_pic" onclick="goToLinkPage()" />
               </div>
 
               <div class="col-sm-7">
@@ -131,7 +131,7 @@ $userRow = $result->fetch_assoc();
                 </table>
               </div>
               <div class="col-3" id="followDiv">
-                <button id="followButton">Follow</button>
+                <button id="followButton" onclick="goToFollowPage()">Follow</button>
               </div>
               <div class="col-6" id="recomendationDiv">
                 <p id="recomendationText">Recommended weight:</p>
@@ -338,7 +338,7 @@ $userRow = $result->fetch_assoc();
             </div>
           </div>
           <div class="text-center">
-            <button id="historyButton">See history</button>
+            <button id="historyButton" onclick="goToHistoryPage()">See history</button>
           </div>
         </div>
       </div>
@@ -346,6 +346,20 @@ $userRow = $result->fetch_assoc();
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
+    function goToHistoryPage(){
+      window.location.href = 'project.html';
+      return false;
+    }
+    function goToLinkPage(){
+      window.location.href = 'YourLink.html';
+      return false;
+    }
+
+    function goToFollowPage(){
+      window.location.href = 'follow.html';
+      return false;
+    };
+
     var status = -1;
     window.onload = updateBMI();
     function colorChange(value){
