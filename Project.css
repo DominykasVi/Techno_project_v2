@@ -14,6 +14,12 @@ h2{
     word-spacing: 50px;
     font-size: 30px;
 }
+.statusBox{
+    padding: 10px;
+    background-color: #758ecd;
+    text-align: center;
+    border: 1px solid #f3f8f2;
+}
 #exerciseImage {
     width: 70%;
     height: auto;
@@ -155,7 +161,6 @@ h2{
 #colr_status{
     background-color: #dee2d6;
     border-radius: 20%;
-    padding-left: 60px;
     font-size: 30px;
 }
 #main_pie{
@@ -197,10 +202,12 @@ h2{
     border: 0.5px solid grey;
     border-radius: 10px;
 }
-#main_graph{
+.main_graph{
     background-color: #758ecd;
     border: 0.5px solid grey;
     border-radius: 10px;
+    margin: 20px;
+    padding: 20px;
 }
 #line_graph_2{
     height: 200px;
@@ -228,13 +235,19 @@ h2{
     width: 300px;
 }
 #info_div{
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
     background-color:#758ecd;
     border: 2px solid #707070;
     border-radius: 10%;
     text-align: center;
+    vertical-align: text-top;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+#statusBox{
+    background-color: #758ecd;
+    text-align: center;
+    border: 1px solid #f3f8f2;
+    border-radius: 10%;
     vertical-align: text-top;
 }
 #load_char{
@@ -243,7 +256,7 @@ h2{
     margin-top: 10px;
 }
 h4{
-    color: #3581b8;
+    color: #dee2d6;
     font-size: 35px;
     margin-top: 20px;
     margin-bottom: 10px;

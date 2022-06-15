@@ -24,37 +24,24 @@ $userRow = $result->fetch_assoc();
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Document</title>   
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="Project.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    />  
+    <link rel="stylesheet" type="text/css" href="Project.css" />
   </head>
   
   <body>
-      
   <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
@@ -153,18 +140,30 @@ $userRow = $result->fetch_assoc();
 
             <!--this is the first big div of "Exercises" tab-->
             <?php
- 
+
+                $dataPoints = array(
+                    array("label"=> "Exercise1", "y"=> 60.0),
+                    array("label"=> "Exercise2", "y"=> 6.5),
+                    array("label"=> "Exercise3", "y"=> 4.6),
+                    array("label"=> "Exercise4", "y"=> 2.4),
+                    array("label"=> "Exercise5", "y"=> 1.9),
+                    array("label"=> "Exercise6", "y"=> 1.8)
+                );
+
                 $dataPoints2 = array( 
-                    array("label"=>"Oxygen", "symbol" => "O","y"=>46.6),
-                    array("label"=>"Silicon", "symbol" => "Si","y"=>27.7),
-                    array("label"=>"Aluminium", "symbol" => "Al","y"=>13.9),
-                    array("label"=>"Iron", "symbol" => "Fe","y"=>5),
-                    array("label"=>"Calcium", "symbol" => "Ca","y"=>3.6),
-                    array("label"=>"Sodium", "symbol" => "Na","y"=>2.6),
-                    array("label"=>"Magnesium", "symbol" => "Mg","y"=>2.1),
-                    array("label"=>"Others", "symbol" => "Others","y"=>1.5),
-                
-                )
+                    array("label"=>"Done", "y"=>51.7),
+                    array("label"=>"In progress", "y"=>26.6),
+                    array("label"=>"Not completed", "y"=>21.7)
+                );
+
+                $dataPoints3 = array( 
+                    array("y" => 7,"label" => "March" ),
+                    array("y" => 12,"label" => "April" ),
+                    array("y" => 28,"label" => "May" ),
+                    array("y" => 18,"label" => "June" ),
+                    array("y" => 41,"label" => "July" )
+                );
+
             ?>
             <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
             <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -172,36 +171,100 @@ $userRow = $result->fetch_assoc();
             <script>
                 window.onload = function() {
                 
-                var chart = new CanvasJS.Chart("chartContainer2", {
-                    theme: "light2",
-                    animationEnabled: true,
-                    title: {
-                        text: "Average Composition of Magma"
-                    },
-                    data: [{
-                        type: "doughnut",
-                        indexLabel: "{symbol} - {y}",
-                        yValueFormatString: "#,##0.0\"%\"",
-                        showInLegend: true,
-                        legendText: "{label} : {y}",
-                        dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
-                    }]
-                });
-                chart.render();
-                
-                }
+                    var chart2 = new CanvasJS.Chart("chartContainer2", {
+                        backgroundColor: "#f3f8f2",
+                        theme: "light2",
+                        animationEnabled: true,
+                        title: {
+                            text: "Status of exercises"
+                        },
+                        data: [{
+                            type: "pie",
+                            indexLabel: "{y}",
+                            yValueFormatString: "#,##0.00\"%\"",
+                            indexLabelPlacement: "inside",
+                            indexLabelFontColor: "#36454F",
+                            indexLabelFontSize: 18,
+                            indexLabelFontWeight: "bolder",
+                            showInLegend: true,
+                            legendText: "{label}",
+                            dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
+                        }]
+                    });
+                    chart2.render();
+
+                    var chart = new CanvasJS.Chart("chartContainer", {
+                        backgroundColor: "#dee2d6",
+                        animationEnabled: true,
+                        theme: "light2",
+                        title: {
+                            text: "Calories per Exercise"
+                        },
+                        axisY: {
+                            suffix: "",
+                            scaleBreaks: {
+                                autoCalculate: true
+                            }
+                        },
+                        data: [{
+                            type: "column",
+                            yValueFormatString: "#,##0\"\"",
+                            indexLabel: "{y}",
+                            indexLabelPlacement: "inside",
+                            indexLabelFontColor: "white",
+                            dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+                        }]
+                    });
+                    chart.render();
+
+                    var chart3 = new CanvasJS.Chart("chartContainer3", {
+                        backgroundColor: "#dee2d6",
+                        animationEnabled: true,
+                        title:{
+                            text: "Weight per dates of exercises"
+                        },
+                        axisY: {
+                            title: "Weight in kilograms",
+                            includeZero: true,
+                            prefix: "",
+                            suffix:  "kg"
+                        },
+                        data: [{
+                            type: "bar",
+                            yValueFormatString: "#,##0",
+                            indexLabel: "{y}",
+                            indexLabelPlacement: "inside",
+                            indexLabelFontWeight: "bolder",
+                            indexLabelFontColor: "white",
+                            dataPoints: <?php echo json_encode($dataPoints3, JSON_NUMERIC_CHECK); ?>
+                        }]
+                    });
+                    chart3.render();
+            }
             </script>
 
-            <div id="pieChart" class="row justify-content-md-center" style="margin:20px; padding:20px;">
-                <div class="col-sm-6" id="chartContainer2">
-                    <!--<img id="pie"  class="img-fluid" alt="Responsive image" src="Resources/pie.png" />-->
-                </div>
 
-            
-                <div id="colr_status" class="col-sm-6">
+
+            <div id="pieChart" class="row justify-content-md-center" style="margin:20px; ">
+                <div class="col-sm-6" id="chartContainer2" style="height:350px;"></div>
+                <div id="colr_status" class="col-sm-6 text-center">
                     Your Statistics
-                    <div class="row">
-                        <div class="col-sm-12" id="chartContainer2">
+                    <div class="container-fluid">
+                        <div class="row justify-content-center" >
+                            <div id="info_div" class="col-sm-5" style="font-size:20px;">
+                                Done                            
+                                <h4>1100</h4> <!--TODO: Here calculate number of exercises-->
+                            </div>
+                            <div id="info_div" class="col-sm-5" style="font-size:20px;">
+                                In progress
+                                <h4>1100</h4><!--TODO: Here calculate number of exercises-->
+                            </div>
+                        </div>
+                        <div class="row justify-content-md-center">
+                            <div id="info_div" class="col-sm-5" style="font-size:20px;">
+                                Not completed
+                                <h4>1100</h4><!--TODO: Here calculate number of exercises-->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -210,47 +273,6 @@ $userRow = $result->fetch_assoc();
 
 
         <!--this is the second div of "Exercises" tab-->
-        <?php
-            $dataPoints = array(
-                array("label"=> "Exercise1", "y"=> 60.0),
-                array("label"=> "Exercise2", "y"=> 6.5),
-                array("label"=> "Exercise3", "y"=> 4.6),
-                array("label"=> "Exercise4", "y"=> 2.4),
-                array("label"=> "Exercise5", "y"=> 1.9),
-                array("label"=> "Exercise6", "y"=> 1.8)
-            );
-        ?>
-        <script>
-            window.onload = function () {
-            var chart = new CanvasJS.Chart("chartContainer", {
-                backgroundColor: "#dee2d6",
-                animationEnabled: true,
-                theme: "light2",
-                title: {
-                    text: "Calories per Exercise"
-                },
-                axisY: {
-                    suffix: "",
-                    scaleBreaks: {
-                        autoCalculate: true
-                    }
-                },
-                data: [{
-                    type: "column",
-                    yValueFormatString: "#,##0\"\"",
-                    indexLabel: "{y}",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-                }]
-            });
-            chart.render();
-            
-            }
-        </script>
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-
         <div id="barChart" class="row justify-content-md-center" style="margin:20px; padding:20px;">
             <div class="col-sm-11" id="chartContainer" style="height:350px;"></div>
         </div>
@@ -261,22 +283,22 @@ $userRow = $result->fetch_assoc();
             <div id="info_about_exercise" class="col-sm-8">
                 <div class="container" style="margin-top:40px;">
                     <div class="row">
-                        <div class="col-sm-2" id="info_div" style="margin-right:10px;">
+                        <div class="col-sm-4" id="info_div" style="margin-right:10px;">
                             Calories
                             <h4>1100</h4>
                             kcal
                         </div>
-                        <div class="col-sm-2" id="info_div">
+                        <div class="col-sm-4" id="info_div">
                             Time spent
                             <h4>4</h4>
                             minutes
                         </div>
                         <div class="w-100"></div>
-                        <div class="col-sm-2" id="info_div" style="margin-right:10px;">
+                        <div class="col-sm-4" id="info_div" style="margin-right:10px;">
                             Effort grade
                             <h4>10/10</h4>
                         </div>
-                        <div class="col-sm-2" id="info_div">
+                        <div class="col-sm-4" id="info_div">
                             <div>Status</div>
                             <img id="load_char" src="Resources/round-chart.png" />
                         </div>
@@ -300,64 +322,12 @@ $userRow = $result->fetch_assoc();
         <!--this is the first big div of "Graphs" tab-->
 
 
-        <!--
-        <?php
-            $dataPoints3 = array( 
-                array("y" => 7,"label" => "March" ),
-                array("y" => 12,"label" => "April" ),
-                array("y" => 28,"label" => "May" ),
-                array("y" => 18,"label" => "June" ),
-                array("y" => 41,"label" => "July" )
-            );
-            
-        ?>
-        <script>
-            window.onload = function() {
-            
-            var chart3 = new CanvasJS.Chart("chartContainer3", {
-                animationEnabled: true,
-                title:{
-                    text: "Revenue Chart of Acme Corporation"
-                },
-                axisY: {
-                    title: "Revenue (in USD)",
-                    includeZero: true,
-                    prefix: "$",
-                    suffix:  "k"
-                },
-                data: [{
-                    type: "bar",
-                    yValueFormatString: "$#,##0K",
-                    indexLabel: "{y}",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontWeight: "bolder",
-                    indexLabelFontColor: "white",
-                    dataPoints: <?php echo json_encode($dataPoints3, JSON_NUMERIC_CHECK); ?>
-                }]
-            });
-            chart3.render();
-            
-            }
-        </script>
-        <div id="main_graph" class="row container-fluid justify-content-md-center">
-            <div id="graph_text" class="col-sm-4">Graph</div>
+
+        <div id="main_graph" class="row container justify-content-center" style="margin:20px; padding:20px;">
             <div id="chartContainer3" class="col-sm-8" style="height: 300px;">
-                <img id="big_graph" src="Resources/big-graph.png" />
             </div>
         </div>
-        <br />-->
 
-        <!--this is the second div of "Graphs" tab-->
-        <div id="graph_number_2">
-          <div id="statistics_text" style="float: left">Statistics</div>
-
-          <div style="float: left">
-            <img id="line_graph_2" src="Resources/bar-graph.png" />
-          </div>
-          <div style="float: right">
-            <img id="line_graph_2" src="Resources/line-graph.png" />
-          </div>
-        </div>
       </div>
     </div>
     </div>
