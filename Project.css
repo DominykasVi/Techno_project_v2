@@ -1,17 +1,70 @@
 body{
     font-family:'Times New Roman', Times, serif;
-    background-color: #dee2d6;
+    background-color: #f3f8f2;
 }
 h1, h2{
     text-align: center;
-    color: #DDE2D6;
+    color: #758ecd;
 }
 h1{
     font-size: 40px;
 }
 h2{
+    margin-right: 50px;
     word-spacing: 50px;
     font-size: 30px;
+}
+#exerciseImage {
+    width: 70%;
+    height: auto;
+    border-radius: 50%;
+    border: 1px solid #707070;
+  }
+  #exerciseList {
+    width: 100%;
+    height: 90%;
+  }
+  #historyRow {
+    height: 95%;
+  }
+  .historyText {
+    font-size: 28px;
+    color: #758ecd;
+    text-align: center;
+  }
+  .headingText {
+    font-size: 35px;
+    color: #758ecd;
+  }
+  .mainHeading{
+    font-size: 45px;
+    color: #758ecd; 
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .exerciseInfo {
+    margin-top: 15px;
+    text-align: center;
+    color: #707070;
+    height: 40px;
+    background-color: #ffffff;
+    border-radius: 25px;
+    vertical-align: center;
+    border: 1px solid #707070;
+    font-size: 22px;
+    padding: 3px;
+  }
+  #status{
+  background-color: white;
+  border: 1px solid #707070;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 50%;
 }
 #arrow{
     padding-top: 5px;
@@ -25,10 +78,7 @@ h2{
     display: table;
 }
 #coll{
-    float: left;
-    height: 720px;
-    width: 480px;
-    background-color: #3581b8;
+    border-right: 3px solid #DDE2D6;
 }
 #colr{
     width: 780px;
@@ -36,32 +86,23 @@ h2{
     font-size: 22px;
     height: 720px;
 }
-#main{
-    height: 720px;
-    border: 3px solid black;
-    width: 1280px;
-}
 #coll_slider{
     text-align: center;
-    float: left;
-    height: 25px;
-    width: 200px;
     border-right: 0.5px solid #707070;
     border-left: 1px solid #707070;
     border-top: 1px solid #707070;
     border-bottom: 1px solid #707070;  
     background-color: #EDE6F2;  
+    margin-top: 10px;
 }
 #colr_slider{
     text-align: center;
-    width: 200px;
-    float: right;
-    height: 25px;
     border-left: 0.5px solid #707070;
     border-right: 1px solid #707070;
     border-top: 1px solid #707070;
     border-bottom: 1px solid #707070;
     background-color: #ffffff;  
+    margin-top: 10px;
 }
 
 #main_slider{
@@ -73,7 +114,7 @@ h2{
 #exercise, #date{
     height: 30px;
     width: 130px;
-    background-color: #dee2d6;
+    background-color: #758ecd;
     border-radius: 20px;
     text-align: center;
     padding-top: 10px;
@@ -81,16 +122,7 @@ h2{
     margin-top: 10px;
     font-size: 20px;
 }
-.status{
-    height: 40px;
-    width: 50px;
-    border-radius: 40px;
-    padding-top: 7px;
-    margin-left: 10px;
-    margin-top: 10px;
-    margin-right: 20px;
-    box-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-}
+
 #red{
     background-color: red;
 }
@@ -101,54 +133,42 @@ h2{
     background-color: yellow;
 }
 #icon{
-    padding-left: 10px;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%; 
-    margin-right: 30px;
+    width: 350%;
+    height: auto;
+    border-radius: 50%;
 }
-#coll_pie{
-    float: left;
-    height: 270px;
-    width: 270px;
+.MyButton{
+    background-color: #758ecd;
+    font-size: 24px;
+    border: transparent;
+    margin-left: 10px;
+    margin-top: 10px;
 }
+.btn {
+    background-color: #758ecd; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+  }
 #colr_status{
-    width: 400px;
-    float: right;
-    height: 270px;
-    background-color: #3581b8;
-    border-radius: 10%;
-    padding-left: 20px;
+    background-color: #dee2d6;
+    border-radius: 20%;
+    padding-left: 60px;
     font-size: 30px;
 }
 #main_pie{
-    height: 270px;
-    width: 700px;
+    margin-top: 30px;
 }
-#pie{
+#pie, 
+#statistics_chart{
     height: 250px;
-    width: 250px;
-  }
-#your_statistics{
-    padding-top: 20px;
-    padding-left: 20px;
-    height: 240px;
-    width: 240px;
-}
-#graph_number, #graph_number_2{
-    height: 250px;
-    width: 660px;
-    background-color: #3581b8;
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-right: 20px;
 }
 #graph_number_2{
     height: 220px;
 }
 #line_graph{
-    height: 220px;
-    width: 250px;
     padding-top: 10px;
     padding-right: 15px;
 }
@@ -162,7 +182,7 @@ h2{
     height: 60px;
     width: 70px;
     border-radius: 10px;
-    background-color: #EDE6F2;
+    background-color: #758ecd;
     padding-right: 40px;
 }
 #number_text{
@@ -170,20 +190,15 @@ h2{
     padding-left: 50px;
 }
 #choose_exercise{
-    height: 50px;
-    width: 700px;
-    align-self: center;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 5px;
     font-size: 40px;
     background-color: #EDE6F2;
     border: 0.5px solid grey;
     border-radius: 10px;
 }
 #main_graph{
-    height: 300px;
-    width: 700px;
-    background-color: #EDE6F2;
+    background-color: #758ecd;
     border: 0.5px solid grey;
     border-radius: 10px;
 }
@@ -213,16 +228,14 @@ h2{
     width: 300px;
 }
 #info_div{
-    height: 130px;
-    width: 140px;
     margin-top: 10px;
-    margin-left: 0px;
-    background-color:#3581b8;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color:#758ecd;
     border: 2px solid #707070;
     border-radius: 10%;
     text-align: center;
     vertical-align: text-top;
-    line-height: normal;
 }
 #load_char{
     height: 90px;
@@ -230,7 +243,7 @@ h2{
     margin-top: 10px;
 }
 h4{
-    color: #DDE2D6;
+    color: #3581b8;
     font-size: 35px;
     margin-top: 20px;
     margin-bottom: 10px;
@@ -238,7 +251,6 @@ h4{
 #pilates_img{
     height: 300px;
     width: 350px;
-    float: right;
 }
 #about_exercise_text{
     height: 250px;

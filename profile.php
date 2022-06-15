@@ -347,7 +347,7 @@ $userRow = $result->fetch_assoc();
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     function goToHistoryPage(){
-      window.location.href = 'project.html';
+      window.location.href = 'history.php';
       return false;
     }
     function goToLinkPage(){
