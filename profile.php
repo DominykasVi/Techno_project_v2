@@ -17,7 +17,8 @@ $sql = "SELECT * FROM users WHERE id=$id";
 $result = $db->query($sql);
 $userRow = $result->fetch_assoc();
 
-// print_r($userRow['height']);
+// echo $userRow['image'];
+// print_r($userRow);  
 // print $row['weigth']
 ?>
 <!DOCTYPE html>
@@ -33,7 +34,7 @@ $userRow = $result->fetch_assoc();
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" type="text/css" href="profile.css" />
+    <link rel="stylesheet" type="text/css" href="./profile.css" />
   </head>
   <body>
     <script
@@ -58,7 +59,15 @@ $userRow = $result->fetch_assoc();
           <div class="container-fluid h-100" id="profileContainer">
             <div class="row align-items-center" id="profileTop">
               <div class="col-sm-5">
-                <img src="Resources/profile_pic.png" id="profile_pic" onclick="goToLinkPage()" />
+              <form action="YourLink.php" method="post">
+                <button  
+                  type="submit" 
+                  style="border: 0; background: transparent">
+                  <img id="profile_pic" src="./ProfilePictures/<?php print $userRow['image']?>"/>
+                </button>
+                <input type="hidden" name="id" value="<?php print $userRow['id'] ?>">
+              </form>
+                <!-- <img src="Resources/profile_pic.png" id="profile_pic" onclick="goToLinkPage()" /> -->
               </div>
 
               <div class="col-sm-7">
@@ -151,7 +160,42 @@ $userRow = $result->fetch_assoc();
                           <input name="status" type="hidden" id="statusForm"></input>
                     </div>
                     <div class="col-lg-4">
-                      <input type="text" id="exercise" name="exercise"/>
+                      <select 
+                        id="exercise"
+                        type="button"
+                        class="form-select"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        style="position:absolute"
+                      >
+                        <option selected>Exercise:</option>
+                        <?php
+                              function printOption($option){
+                                echo '<option value="';
+                                echo $option;
+                                echo '">';
+                                echo $option;
+                                echo '</option>';
+                              }
+                              $sql = "SELECT * FROM exercises";
+                              $exerciseResults = $db->query($sql);
+                              $exerciseDict = [];
+                              if ($exerciseResults->num_rows > 0) {
+                                // output data of each row
+                                  while($row = $exerciseResults->fetch_assoc()) {
+                                      // echo $row['id'] . $row['name']. $row['image_link'];
+                                      printOption($row['name']);
+                                      // print_r($exercideDict);
+                                  }
+                              }
+                        ?>
+                      </select>
+              
+                        <!-- this is here so width doesent get screwed -->
+                        <input  style="visibility:   hidden; height: 0px;" id="exercise"/>
+                    
+                        <!-- <input type="text" id="exercise" name="exercise"/> -->
                     </div>
                     <div class="col-lg-3">
                       <div class="btn-group">
@@ -228,8 +272,11 @@ $userRow = $result->fetch_assoc();
             </div>
           </div>
         </div>
-        <div class="col-xl-7 h-100" id="right">
-          <div class="bigText">History</div>
+        <div class="col-xl-7 h-100">
+          <div class="bg-light d-flex justify-content-between">
+            <div class="bigText">History</div>
+            <button type="button" id="LogOutButton" onclick="LogOut()">Log Out</button>
+          </div>
           <div class="container py-0 my-0 text-center" id="historyContainer">
             <div
               class="row align-items-center my-0"
@@ -347,7 +394,7 @@ $userRow = $result->fetch_assoc();
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     function goToHistoryPage(){
-      window.location.href = 'history.php';
+      window.location.href = 'History.php';
       return false;
     }
     function goToLinkPage(){
@@ -405,7 +452,7 @@ $userRow = $result->fetch_assoc();
       console.log(status)
       var dataString = 'function=insertExercise&status=' + statusForm + '&location=' + location + '&people=' + people + '&exercise=' + exercise;
 
-      if($(".dropbtn").css( "background-color" )=== "rgb(255, 255, 255)" || exercise=='')
+      if($(".dropbtn").css( "background-color" )=== "rgb(255, 255, 255)" || exercise=='Exercise:')
       {
           alert("Please fill in all fields");
       }
@@ -418,6 +465,7 @@ $userRow = $result->fetch_assoc();
               data: dataString,
               success: function(result){
                 alert("Exercises have been updated");
+                window.location.reload() 
               }
           });
       }
@@ -441,8 +489,10 @@ $userRow = $result->fetch_assoc();
               url: "db_manager.php",
               data: dataString,
               success: function(result){
-                  alert(result);
-                  // window.location.reload() 
+                  // alert(result);
+                  alert("Your weight has been updated");
+
+                  window.location.reload() 
               }
           });
       }
@@ -464,7 +514,7 @@ $userRow = $result->fetch_assoc();
               url: "db_manager.php",
               data: dataString,
               success: function(result){
-                  alert(result);
+                  alert("Your height has been updated");
                   window.location.reload() 
               }
           });
@@ -485,6 +535,9 @@ $userRow = $result->fetch_assoc();
 
       var recomendedWeight = (20 * (height*height)).toFixed(1);;
       $('#recomendedWeight').text(recomendedWeight);
+    }
+    function LogOut(){
+      alert("TODO: Implement log out after we have login");
     }
   </script>
 </html>

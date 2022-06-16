@@ -30,18 +30,19 @@ function insertExercise($db){
         }
     }
     $id=$_SESSION['id'];
-    $status=$_REQUEST['status'];
-    $exercise=$exerciseDict[$_REQUEST['exercise']];
+    
+    $status=mysqli_real_escape_string($db, $_REQUEST['status']);
+    $exercise=$exerciseDict[mysqli_real_escape_string($db, $_REQUEST['exercise'])];
 
     if($_REQUEST['location'] != ""){
-        $location=$_REQUEST['location'];
+        $location=mysqli_real_escape_string($db, $_REQUEST['location']);
     } else {
         echo "location not set;";
 
         $location=" ";
     }
     if($_REQUEST['people'] != ""){
-        $people=$_REQUEST['people'];
+        $people=mysqli_real_escape_string($db, $_REQUEST['people']);
     } else {
         echo "people not set;";
         $people=1;
@@ -65,14 +66,14 @@ function insertWeight($db){
     $id=$_SESSION['id'];
 
     if($_REQUEST['weight'] != ""){
-        $weight=$_REQUEST['weight'];
+        $weight=mysqli_real_escape_string($db, $_REQUEST['weight']);
     } else {
         echo "weight not set;";
         return false;
     }
     $date = date('Y-m-d');
 
-    echo $_REQUEST['weight'];
+    // echo $_REQUEST['weight'];
     $sql = "INSERT INTO weights (user_id, weight, date) 
     VALUES ($id, $weight, '$date')";
 
@@ -87,7 +88,7 @@ function updateHeight($db){
     $id=$_SESSION['id'];
 
     if($_REQUEST['height'] != ""){
-        $height=$_REQUEST['height'];
+        $height=mysqli_real_escape_string($db, $_REQUEST['height']);
     } else {
         echo "height not set;";
         return false;
