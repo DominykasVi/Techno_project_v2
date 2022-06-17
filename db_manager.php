@@ -15,6 +15,34 @@ switch ($_REQUEST["function"]){
     case "updateHeight":
         updateHeight($db);
         break;
+    case "copy":
+        copyExercises($db);
+        break;
+}
+
+function copyExercises($db){
+    $data = json_decode(stripslashes($_POST['data']));
+
+    foreach($data as $exercise){
+        // echo $exercise;
+
+        $sql = "SELECT * from history WHERE id=$exercise";
+        $result = $db->query($sql);
+        $row = $result->fetch_assoc();
+
+        $id = $_REQUEST['guest_id'];
+        $exercise_id = $row['exercise_id'];
+        $location = $row['location'];
+        $people = $row['people'];
+        $status = $row['status'];
+        $sql = "INSERT INTO history (user_id, exercise_id, location, people, status)
+            VALUES ($id, $exercise_id, '$location', $people, '$status')";
+        if ($db->query($sql) === TRUE) {
+            echo "Success";
+        } else {
+            echo "Error: " . $sql . "<br>" . $db->error;
+        }
+     }
 }
 
 function insertExercise($db){

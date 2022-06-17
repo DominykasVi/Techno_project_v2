@@ -15,6 +15,7 @@ $sql = "SELECT * FROM users WHERE id=$id";
 $result = $db->query($sql);
 $userRow = $result->fetch_assoc();
 
+// echo $_REQUEST['guest_id'];
 ?>
 
 
@@ -36,6 +37,8 @@ $userRow = $result->fetch_assoc();
   </head>
   
   <body>
+  <input type="hidden" id="view" value="<?php print $_REQUEST['guest_id'] ?>">
+
   <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
@@ -60,7 +63,7 @@ $userRow = $result->fetch_assoc();
             <div class="row justify-content-center">
                 <div class="col-sm-5"></div>
                 <div class="col-sm-4 headingText">Exercise</div>
-                <div class="col-sm-3 headingText">Status</div>
+                <div class="col-sm-3 headingText" id="statusText">Status</div>
             </div>
 
 
@@ -86,7 +89,7 @@ $userRow = $result->fetch_assoc();
                                 while($row = $historyResults->fetch_assoc()) {
                                 printImage($exerciseDict[$row['exercise_id']][1]);
                                 printName($exerciseDict[$row['exercise_id']][0]);
-                                printStatus($row['status']);
+                                printStatus($row['status'], $row['id']);
                                 }
                             } else {
                                 echo "0 results";
@@ -110,7 +113,7 @@ $userRow = $result->fetch_assoc();
                                 echo '</div>';
                             }
                             
-                            function printStatus($status){
+                            function printStatus($status, $id){
                                 $statusDict = [
                                 "Not completed" => "#ff0000",
                                 "In progress" => "#ffff00",
@@ -118,8 +121,18 @@ $userRow = $result->fetch_assoc();
                                 ];
 
                                 echo '<div class="col-sm-1">';
-                                echo '<div id="status"';
-                                echo 'style="background-color:';
+                                echo '<div class="status"';
+
+                                echo 'id="';
+                                echo $id;
+                                echo '"';
+                                // echo 'id="18"';
+
+                                echo ' onclick="copyExercise(';
+                                echo $id;
+                                echo ')"';
+
+                                echo ' style="background-color:';
                                 echo $statusDict[$status];
                                 echo '"';
                                 echo '></div>';
@@ -128,7 +141,9 @@ $userRow = $result->fetch_assoc();
                         ?>                   
                     </div>
                 </div>
-
+                <div class="text-center" style="width: 100%">
+                  <button id="copyButton" onclick="copyExercises()">Copy selected exercises</button>
+                </div>
             </div>
     </div>
 
@@ -336,10 +351,59 @@ $userRow = $result->fetch_assoc();
 
 
     <script>
-        function goToProfilePage(){
-            window.location.href = 'profile.php';
-            return false;
+      function goToProfilePage(){
+          window.location.href = 'profile.php';
+          return false;
+      }
+      window.onload = setVisibility();
+
+      function setVisibility(){
+        if($('#view').val() !== "-1"){
+          $('#statusText').text("Copy");
+
+          $('.status').css("background-color", "white");
+
+        } else {
+          $('#copyButton').hide();
+
         }
+      }
+
+      var exercisesToCopy = []
+      
+      function copyExercise(id){
+        if($('#view').val() !== "-1"){
+            var selectorID = "#" + id.toString();
+            // console.log(id);
+            if ($(selectorID).css("background-color") === 'rgb(50, 205, 50)'){
+              $(selectorID).css("background-color", "white");
+              const index = exercisesToCopy.indexOf(id);
+              if (index > -1) {
+                exercisesToCopy.splice(index, 1);
+              }
+            } else {
+              $(selectorID).css("background-color", "#32cd32");
+              exercisesToCopy.push(id);
+            }
+            // console.log(selectorID);
+            // console.log($(selectorID).css("background-color"))
+            // console.log(exercisesToCopy)
+        }
+      }
+
+      function copyExercises(){
+        var jsonString = JSON.stringify(exercisesToCopy);
+          $.ajax({
+                type: "POST",
+                url: "db_manager.php",
+                data: {data : jsonString, function: "copy", 
+                      guest_id: $('#view').val()}, 
+                cache: false,
+                success: function(result){
+                    alert(result);
+                }
+            });
+      }
 
       $(document).ready(function () {
         $("#pieChart").show();

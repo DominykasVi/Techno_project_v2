@@ -5,8 +5,12 @@
 include 'config.php';
 // temp code
 session_start(); 
-$_SESSION['id'] = 1;
+$_SESSION['id'] = 2;
 $id = $_SESSION['id'];
+
+// $_REQUEST['guest_id'] = "2";
+$_REQUEST['guest_id'] = "-1";
+
 
 $sql = "SELECT * FROM weights WHERE user_id=$id ORDER BY id DESC LIMIT 1 ";
 $result = $db->query($sql);
@@ -52,7 +56,7 @@ $userRow = $result->fetch_assoc();
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    
+    <input type="hidden" id="view" value="<?php print $_REQUEST['guest_id'] ?>">
     <div class="container-fluid h-100">
       <div class="row h-100">
         <div class="col-xl-5 h-100" id="left">
@@ -96,41 +100,52 @@ $userRow = $result->fetch_assoc();
                     }
                     $sql = "SELECT follower FROM relationships 
                     WHERE following=$id ORDER BY id DESC LIMIT 3";
-                    $followers = $db->query($sql);
+                    $result = $db->query($sql);
+                    $followers = [];
+                    if ($result->num_rows < 3) {
+                      while ($row = $result->fetch_assoc()){
+                        array_push($followers, getFollower($row['follower'], $db));
+                      }
+                      // print(count($followers));
+                      while(count($followers) < 3){
+                        array_push($followers, [
+                          'image' => 'https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg',
+                          'username' => ''
+                        ]);
+                      };
+                    } else {
+                      while ($row = $result->fetch_assoc()){
+                        array_push($followers, getFollower($row['follower'], $db));
+                      }
+                      // print $followers[0]['image'];
+                    }
                     // output data of each row
-                    $row = $followers->fetch_assoc();
-                    $user = getFollower($row['follower'], $db);?>
+                    ?>
                     <a class="route d-flex">
                       <div
-                        title="<?php print $user['username'];?>"
+                        title="<?php print $followers[2]['username'];?>"
                         class="rounded-circle default-avatar member-overlap-item"
                         style="
-                          background: url(<?php print $user['image']?>)
+                          background: url(<?php print $followers[2]['image']?>)
                             0 0 no-repeat;
                           background-size: cover;
                         "
                       ></div>
-                      <?php 
-                      $row = $followers->fetch_assoc();
-                      $user = getFollower($row['follower'], $db);?>
                       <div
-                        title="<?php print $user['username'];?>"
+                        title="<?php print $followers[1]['username'];?>"
                         class="rounded-circle default-avatar member-overlap-item"
                         style="
                         
-                          background: url(<?php print $user['image']?>)
+                          background: url(<?php print $followers[1]['image']?>)
                             0 0 no-repeat;
                           background-size: cover;
                         "
                       ></div>
-                      <?php 
-                      $row = $followers->fetch_assoc();
-                      $user = getFollower($row['follower'], $db);?>
                       <div
-                        title="<?php print $user['username'];?>"
+                        title="<?php print $followers[0]['username'];?>"
                         class="rounded-circle default-avatar member-overlap-item"
                         style="
-                          background: url(<?php print $user['image']?>)
+                          background: url(<?php print $followers[0]['image']?>)
                             0 0 no-repeat;
                           background-size: cover;
                         "
@@ -150,7 +165,6 @@ $userRow = $result->fetch_assoc();
             <div class="row align-items-center" id="profileCenter">
               <!-- <form method="POST" action="db_manager.php"> -->
               <form>
-
                 <input name="function" type="hidden" value="insertExercise"></input>
                 <p class="bigText">Add exercise</p>
                 <div class="container" id="addExerciseFormContainer">
@@ -272,7 +286,7 @@ $userRow = $result->fetch_assoc();
             </div>
           </div>
         </div>
-        <div class="col-xl-7 h-100">
+        <div class="col-xl-7 h-100" id="historyDiv">
           <div class="bg-light d-flex justify-content-between">
             <div class="bigText">History</div>
             <button type="button" id="LogOutButton" onclick="LogOut()">Log Out</button>
@@ -357,7 +371,7 @@ $userRow = $result->fetch_assoc();
                     ];
 
                     echo '<div class="col-sm-1">';
-                    echo '<div id="status"';
+                    echo '<div class="status"';
                     echo 'style="background-color:';
                     echo $statusDict[$status];
                     echo '"';
@@ -385,7 +399,17 @@ $userRow = $result->fetch_assoc();
             </div>
           </div>
           <div class="text-center">
-            <button id="historyButton" onclick="goToHistoryPage()">See history</button>
+            <form action="History.php" method="post">
+              <button 
+                type="submit" 
+                id="historyButton" 
+                >
+                See history
+              </button>
+              <input type="hidden" name="id" value="<?php print $userRow['id'];?>">
+              <input type="hidden" name="guest_id" value="<?php print $_REQUEST['guest_id'];?>">
+
+            </form>
           </div>
         </div>
       </div>
@@ -393,6 +417,26 @@ $userRow = $result->fetch_assoc();
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
+
+    window.onload = updateBMI();
+    window.onload = setVisibility();
+
+    function setVisibility(){
+      if($('#view').val() !== "-1"){
+        $('#profileCenter').hide();
+        $('#profileBottom').hide();
+        $('#followButton').hide();
+
+        $('#LogOutButton').text("Back");
+
+        $('.status').css("background-color", "white");
+        
+        $('#historyDiv').css("border-left", "2px solid #3581b8");
+        $('#profileTop').css("border-right", "0px solid #3581b8");
+        $('#profileSocial').css("border-right", "0px solid #3581b8");
+      }
+    }
+
     function goToHistoryPage(){
       window.location.href = 'History.php';
       return false;
@@ -408,7 +452,6 @@ $userRow = $result->fetch_assoc();
     };
 
     var status = -1;
-    window.onload = updateBMI();
     function colorChange(value){
       showButton();
       switch (value) {
@@ -499,27 +542,29 @@ $userRow = $result->fetch_assoc();
       return false;
     }
     function updateHeight(){
-      var height = parseFloat($("#height").val());
-      // console.log(parseFloat(height))
-      var dataString = 'function=updateHeight&height=' + height;
-      if(height==='' || height==null)
-      {
-          alert("Please fill in weight");
+      if($('#view').val() === "-1"){
+        var height = parseFloat($("#height").val());
+        // console.log(parseFloat(height))
+        var dataString = 'function=updateHeight&height=' + height;
+        if(height==='' || height==null)
+        {
+            alert("Please fill in weight");
+        }
+        else
+        {
+            // Ajax code to submit form.
+            $.ajax({
+                type: "POST",
+                url: "db_manager.php",
+                data: dataString,
+                success: function(result){
+                    alert("Your height has been updated");
+                    window.location.reload() 
+                }
+            });
+        }
+        return false;
       }
-      else
-      {
-          // Ajax code to submit form.
-          $.ajax({
-              type: "POST",
-              url: "db_manager.php",
-              data: dataString,
-              success: function(result){
-                  alert("Your height has been updated");
-                  window.location.reload() 
-              }
-          });
-      }
-      return false;
     }
     function updateBMI(){
       var weight = (parseFloat($("#weight").text()));
@@ -537,7 +582,11 @@ $userRow = $result->fetch_assoc();
       $('#recomendedWeight').text(recomendedWeight);
     }
     function LogOut(){
-      alert("TODO: Implement log out after we have login");
+      if($('#view').val() !== "-1"){
+        alert("Implement going back to the user");
+      } else {
+        alert("TODO: Implement log out after we have login");
+      }
     }
   </script>
 </html>

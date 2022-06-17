@@ -1,66 +1,67 @@
-body{
-    font-family:'Times New Roman', Times, serif;
-    background-color: #f3f8f2;
+body {
+  font-family: "Times New Roman", Times, serif;
+  background-color: #f3f8f2;
 }
-h1, h2{
-    text-align: center;
-    color: #758ecd;
+h1,
+h2 {
+  text-align: center;
+  color: #758ecd;
 }
-h1{
-    font-size: 40px;
+h1 {
+  font-size: 40px;
 }
-h2{
-    margin-right: 50px;
-    word-spacing: 50px;
-    font-size: 30px;
+h2 {
+  margin-right: 50px;
+  word-spacing: 50px;
+  font-size: 30px;
 }
-.statusBox{
-    padding: 10px;
-    background-color: #758ecd;
-    text-align: center;
-    border: 1px solid #f3f8f2;
+.statusBox {
+  padding: 10px;
+  background-color: #758ecd;
+  text-align: center;
+  border: 1px solid #f3f8f2;
 }
 #exerciseImage {
-    width: 70%;
-    height: auto;
-    border-radius: 50%;
-    border: 1px solid #707070;
-  }
-  #exerciseList {
-    width: 100%;
-    height: 90%;
-  }
-  #historyRow {
-    height: 95%;
-  }
-  .historyText {
-    font-size: 28px;
-    color: #758ecd;
-    text-align: center;
-  }
-  .headingText {
-    font-size: 35px;
-    color: #758ecd;
-  }
-  .mainHeading{
-    font-size: 45px;
-    color: #758ecd; 
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  .exerciseInfo {
-    margin-top: 15px;
-    text-align: center;
-    color: #707070;
-    height: 40px;
-    background-color: #ffffff;
-    border-radius: 25px;
-    vertical-align: center;
-    border: 1px solid #707070;
-    font-size: 22px;
-    padding: 3px;
-  }
-  #status{
+  width: 70%;
+  height: auto;
+  border-radius: 50%;
+  border: 1px solid #707070;
+}
+#exerciseList {
+  width: 100%;
+  height: 90%;
+}
+#historyRow {
+  height: 95%;
+}
+.historyText {
+  font-size: 28px;
+  color: #758ecd;
+  text-align: center;
+}
+.headingText {
+  font-size: 35px;
+  color: #758ecd;
+}
+.mainHeading {
+  font-size: 45px;
+  color: #758ecd;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.exerciseInfo {
+  margin-top: 15px;
+  text-align: center;
+  color: #707070;
+  height: 40px;
+  background-color: #ffffff;
+  border-radius: 25px;
+  vertical-align: center;
+  border: 1px solid #707070;
+  font-size: 22px;
+  padding: 3px;
+}
+.status {
   background-color: white;
   border: 1px solid #707070;
   color: white;
@@ -72,202 +73,215 @@ h2{
   margin: 4px 2px;
   border-radius: 50%;
 }
-#arrow{
-    padding-top: 5px;
-    padding-left: 10px;
-    height: 30px;
-    width: 30px;
+#arrow {
+  padding-top: 5px;
+  padding-left: 10px;
+  height: 30px;
+  width: 30px;
 }
 .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
+  content: "";
+  clear: both;
+  display: table;
 }
-#coll{
-    border-right: 3px solid #DDE2D6;
+#coll {
+  border-right: 3px solid #dde2d6;
 }
-#colr{
-    width: 780px;
-    float: right;
-    font-size: 22px;
-    height: 720px;
+#colr {
+  width: 780px;
+  float: right;
+  font-size: 22px;
+  height: 720px;
 }
-#coll_slider{
-    text-align: center;
-    border-right: 0.5px solid #707070;
-    border-left: 1px solid #707070;
-    border-top: 1px solid #707070;
-    border-bottom: 1px solid #707070;  
-    background-color: #EDE6F2;  
-    margin-top: 10px;
+#coll_slider {
+  text-align: center;
+  border-right: 0.5px solid #707070;
+  border-left: 1px solid #707070;
+  border-top: 1px solid #707070;
+  border-bottom: 1px solid #707070;
+  background-color: #ede6f2;
+  margin-top: 10px;
 }
-#colr_slider{
-    text-align: center;
-    border-left: 0.5px solid #707070;
-    border-right: 1px solid #707070;
-    border-top: 1px solid #707070;
-    border-bottom: 1px solid #707070;
-    background-color: #ffffff;  
-    margin-top: 10px;
-}
-
-#main_slider{
-    padding-top: 15px;
-    padding-left: 100px;
-    height: 50px;
-    width: 403px;
-}
-#exercise, #date{
-    height: 30px;
-    width: 130px;
-    background-color: #758ecd;
-    border-radius: 20px;
-    text-align: center;
-    padding-top: 10px;
-    margin-right: 30px;
-    margin-top: 10px;
-    font-size: 20px;
+#colr_slider {
+  text-align: center;
+  border-left: 0.5px solid #707070;
+  border-right: 1px solid #707070;
+  border-top: 1px solid #707070;
+  border-bottom: 1px solid #707070;
+  background-color: #ffffff;
+  margin-top: 10px;
 }
 
-#red{
-    background-color: red;
+#main_slider {
+  padding-top: 15px;
+  padding-left: 100px;
+  height: 50px;
+  width: 403px;
 }
-#green{
-    background-color: #00b330;
+#exercise,
+#date {
+  height: 30px;
+  width: 130px;
+  background-color: #758ecd;
+  border-radius: 20px;
+  text-align: center;
+  padding-top: 10px;
+  margin-right: 30px;
+  margin-top: 10px;
+  font-size: 20px;
 }
-#yellow{
-    background-color: yellow;
+
+#red {
+  background-color: red;
 }
-#icon{
-    width: 350%;
-    height: auto;
-    border-radius: 50%;
+#green {
+  background-color: #00b330;
 }
-.MyButton{
-    background-color: #758ecd;
-    font-size: 24px;
-    border: transparent;
-    margin-left: 10px;
-    margin-top: 10px;
+#yellow {
+  background-color: yellow;
+}
+#icon {
+  width: 350%;
+  height: auto;
+  border-radius: 50%;
+}
+.MyButton {
+  background-color: #758ecd;
+  font-size: 24px;
+  border: transparent;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 .btn {
-    background-color: #758ecd; /* Blue background */
-    border: none; /* Remove borders */
-    color: white; /* White text */
-    padding: 12px 16px; /* Some padding */
-    font-size: 16px; /* Set a font size */
-    cursor: pointer; /* Mouse pointer on hover */
-  }
-#colr_status{
-    background-color: #dee2d6;
-    border-radius: 20%;
-    font-size: 30px;
+  background-color: #758ecd; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 12px 16px; /* Some padding */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
 }
-#main_pie{
-    margin-top: 30px;
+#colr_status {
+  background-color: #dee2d6;
+  border-radius: 20%;
+  font-size: 30px;
 }
-#pie, 
-#statistics_chart{
-    height: 250px;
+#main_pie {
+  margin-top: 30px;
 }
-#graph_number_2{
-    height: 220px;
+#pie,
+#statistics_chart {
+  height: 250px;
 }
-#line_graph{
-    padding-top: 10px;
-    padding-right: 15px;
+#graph_number_2 {
+  height: 220px;
 }
-#hash{
-    height: 40px;
-    width: 40px;
-    padding-top: 5px;
-    padding-left: 5px;
+#line_graph {
+  padding-top: 10px;
+  padding-right: 15px;
 }
-#num{
-    height: 60px;
-    width: 70px;
-    border-radius: 10px;
-    background-color: #758ecd;
-    padding-right: 40px;
+#hash {
+  height: 40px;
+  width: 40px;
+  padding-top: 5px;
+  padding-left: 5px;
 }
-#number_text{
-    font-size: 40px;
-    padding-left: 50px;
+#num {
+  height: 60px;
+  width: 70px;
+  border-radius: 10px;
+  background-color: #758ecd;
+  padding-right: 40px;
 }
-#choose_exercise{
-    text-align: center;
-    padding-top: 5px;
-    font-size: 40px;
-    background-color: #EDE6F2;
-    border: 0.5px solid grey;
-    border-radius: 10px;
+#number_text {
+  font-size: 40px;
+  padding-left: 50px;
 }
-.main_graph{
-    background-color: #758ecd;
-    border: 0.5px solid grey;
-    border-radius: 10px;
-    margin: 20px;
-    padding: 20px;
+#choose_exercise {
+  text-align: center;
+  padding-top: 5px;
+  font-size: 40px;
+  background-color: #ede6f2;
+  border: 0.5px solid grey;
+  border-radius: 10px;
 }
-#line_graph_2{
-    height: 200px;
-    width: 200px;
-    margin-right: 30px;
+.main_graph {
+  background-color: #758ecd;
+  border: 0.5px solid grey;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
 }
-#big_graph{
-    height: 300px;
-    width: 400px;
-    margin-left: 80px;
+#line_graph_2 {
+  height: 200px;
+  width: 200px;
+  margin-right: 30px;
 }
-#graph_text, #statistics_text{
-    font-size: 40px;
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-right: 20px;
+#big_graph {
+  height: 300px;
+  width: 400px;
+  margin-left: 80px;
 }
-#about_exercise{
-    width: 700px;
-    height: 538px;
+#graph_text,
+#statistics_text {
+  font-size: 40px;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-right: 20px;
 }
-#info_about_exercise{
-    float: left;
-    height: 300px;
-    width: 300px;
+#about_exercise {
+  width: 700px;
+  height: 538px;
 }
-#info_div{
-    background-color:#758ecd;
-    border: 2px solid #707070;
-    border-radius: 10%;
-    text-align: center;
-    vertical-align: text-top;
-    margin-top: 10px;
-    margin-left: 10px;
+#info_about_exercise {
+  float: left;
+  height: 300px;
+  width: 300px;
 }
-#statusBox{
-    background-color: #758ecd;
-    text-align: center;
-    border: 1px solid #f3f8f2;
-    border-radius: 10%;
-    vertical-align: text-top;
+#info_div {
+  background-color: #758ecd;
+  border: 2px solid #707070;
+  border-radius: 10%;
+  text-align: center;
+  vertical-align: text-top;
+  margin-top: 10px;
+  margin-left: 10px;
 }
-#load_char{
-    height: 90px;
-    width: 90px;
-    margin-top: 10px;
+#statusBox {
+  background-color: #758ecd;
+  text-align: center;
+  border: 1px solid #f3f8f2;
+  border-radius: 10%;
+  vertical-align: text-top;
 }
-h4{
-    color: #dee2d6;
-    font-size: 35px;
-    margin-top: 20px;
-    margin-bottom: 10px;
+#load_char {
+  height: 90px;
+  width: 90px;
+  margin-top: 10px;
 }
-#pilates_img{
-    height: 300px;
-    width: 350px;
+h4 {
+  color: #dee2d6;
+  font-size: 35px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
-#about_exercise_text{
-    height: 250px;
-    width: 700px;
-    vertical-align: bottom;
-    justify-content: end;
+#pilates_img {
+  height: 300px;
+  width: 350px;
+}
+#about_exercise_text {
+  height: 250px;
+  width: 700px;
+  vertical-align: bottom;
+  justify-content: end;
+}
+
+#copyButton {
+  border: 1px solid #707070;
+  background-color: #758ecd;
+  height: 50px;
+  width: 60%;
+  color: white;
+  text-align: center;
+  position: relative;
+  font-size: 30px;
 }
