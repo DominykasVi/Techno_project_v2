@@ -57,10 +57,16 @@ $userRow = $result->fetch_assoc();
                 </div>
             </div>
             
-            <div class="row justify-content-center">
-                <div class="col-sm-5"></div>
-                <div class="col-sm-4 headingText">Exercise</div>
-                <div class="col-sm-3 headingText">Status</div>
+            <div id="exercisesPageHeadings" class="row justify-content-center">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-5 headingText">Exercise</div>
+                <div class="col-sm-2 headingText">Status</div>
+            </div>
+
+            <div id="weightPageHeadings" class="row justify-content-center">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4 headingText">Weight</div>
+                <div class="col-sm-3 headingText">Date</div>
             </div>
 
 
@@ -94,7 +100,7 @@ $userRow = $result->fetch_assoc();
                             $db->close();
 
                             function printImage($img){
-                                echo '<div class="col-sm-3 w-90">';
+                                echo '<div class="col-sm-2 w-90">';
                                 echo '<img id="exerciseImage" src="';
                                 echo $img;
                                 echo '"></img>';
@@ -103,7 +109,7 @@ $userRow = $result->fetch_assoc();
                             }
 
                             function printName($name){
-                                echo '<div class="col-md-6 historyText">';
+                                echo '<div class="col-sm-8 historyText">';
                                 echo '<p class="exerciseInfo">';
                                 echo $name;
                                 echo '</p>';
@@ -128,27 +134,85 @@ $userRow = $result->fetch_assoc();
                         ?>                   
                     </div>
                 </div>
-
             </div>
+
+
+            <div class="row align-items-center" id="weightsRow">
+                <div id="weightsList" class="container align-items-center">
+                    <div class="row align-items-center">
+
+                      <!-- TODO php for listing all weights -->
+
+
+                        <?php
+                        //     $sql2 = "SELECT * FROM exercises";
+                        //     $exerciseResults2 = $db->query($sql2);
+                        //     $exerciseDict2 = [];
+                        //     if ($exerciseResults2->num_rows > 0) {
+                        //         // output data of each row
+                        //         while($row2 = $exerciseResults2->fetch_assoc()) {
+                        //             $exerciseDict2[$row2['id']] = [$row2['name'], $row2['image_link']];
+                        //         }
+                        //         }
+
+                        //     $sql2 = "SELECT id, user_id, weight, date FROM
+                        //     weights WHERE user_id=$id ORDER BY id DESC LIMIT 6";
+                        //     $historyResults2 = $db->query($sql2);
+                        //     if ($historyResults2->num_rows > 0) {
+                        //     // output data of each row
+                        //         while($row2 = $historyResults2->fetch_assoc()) {
+                        //         printImage2($exerciseDict2[$row2['exercise_id']][1]);
+                        //         printWeight($row2['weight']);
+                        //         printDate($row2['date']);
+                        //         }
+                        //     } else {
+                        //         echo "0 results";
+                        //     }
+                        //     $db->close();
+                            
+                        //     function printImage2($img){
+
+                        //         echo '<div class="col-sm-3 w-90">';
+                        //         echo '<img id="exerciseImage" src="';
+                        //         echo $img;
+                        //         echo '"></img>';
+                        //         echo '</div>';
+
+                        //     }
+
+                        //     function printWeight($weight){
+                        //       echo '<div class="col-md-6 historyText">';
+                        //       echo '<p class="exerciseInfo">';
+                        //       echo $weight;
+                        //       echo '</p>';
+                        //       echo '</div>';
+                        //   }
+
+                        //   function printDate($date){
+                        //     echo '<div class="col-md-6 historyText">';
+                        //     echo '<p class="exerciseInfo">';
+                        //     echo $date;
+                        //     echo '</p>';
+                        //     echo '</div>';
+                        //   }
+                            
+                            
+                        // ?>                   
+                    </div>
+                </div>
+            </div>
+
+
     </div>
 
-      <div class="container-fluid col-7">
+    <div class="container-fluid col-7">
             <div id="row" class="row justify-content-md-center">
                 <div id="coll_slider" class="col col-sm-4">Exercises</div>
-                <div id="colr_slider" class="col col-sm-4">Graphs</div>
+                <div id="colr_slider" class="col col-sm-4">Weights</div>
             </div>
 
             <!--this is the first big div of "Exercises" tab-->
             <?php
-
-                $dataPoints = array(
-                    array("label"=> "Exercise1", "y"=> 60.0),
-                    array("label"=> "Exercise2", "y"=> 6.5),
-                    array("label"=> "Exercise3", "y"=> 4.6),
-                    array("label"=> "Exercise4", "y"=> 2.4),
-                    array("label"=> "Exercise5", "y"=> 1.9),
-                    array("label"=> "Exercise6", "y"=> 1.8)
-                );
 
                 $dataPoints2 = array( 
                     array("label"=>"Done", "y"=>51.7),
@@ -163,6 +227,75 @@ $userRow = $result->fetch_assoc();
                     array("y" => 18,"label" => "June" ),
                     array("y" => 41,"label" => "July" )
                 );
+
+                $dataPoints10 = array(
+                  array("label"=> "Single", "y"=> 13),
+                  array("label"=> "Married", "y"=> 21),
+                  array("label"=> "Married and have Kids", "y"=> 24),
+                  array("label"=> "Single Parent", "y"=> 15)
+                );
+                
+                $dataPoints20 = array(
+                  array("label"=> "Single", "y"=> 6),
+                  array("label"=> "Married", "y"=> 12),
+                  array("label"=> "Married and have Kids", "y"=> 13),
+                  array("label"=> "Single Parent", "y"=> 7)
+                );
+                
+                $dataPoints30 = array(
+                  array("label"=> "Single", "y"=> 5),
+                  array("label"=> "Married", "y"=> 9),
+                  array("label"=> "Married and have Kids", "y"=> 10),
+                  array("label"=> "Single Parent", "y"=> 6)
+                );
+                
+                $dataPoints4 = array(
+                  array("label"=> "Single", "y"=> 3),
+                  array("label"=> "Married", "y"=> 8),
+                  array("label"=> "Married and have Kids", "y"=> 9),
+                  array("label"=> "Single Parent", "y"=> 3)
+                );
+                
+                $dataPoints5 = array(
+                  array("label"=> "Single", "y"=> 3),
+                  array("label"=> "Married", "y"=> 5),
+                  array("label"=> "Married and have Kids", "y"=> 4),
+                  array("label"=> "Single Parent", "y"=> 2)
+                );
+                
+                $dataPoints6 = array(
+                  array("label"=> "Single", "y"=> 2),
+                  array("label"=> "Married", "y"=> 3),
+                  array("label"=> "Married and have Kids", "y"=> 4),
+                  array("label"=> "Single Parent", "y"=> 2)
+                );
+                
+                $dataPoints7 = array(
+                  array("label"=> "Single", "y"=> 5),
+                  array("label"=> "Married", "y"=> 9),
+                  array("label"=> "Married and have Kids", "y"=> 9),
+                  array("label"=> "Single Parent", "y"=> 5)
+                );
+
+                $lineDataPoints = array(
+                  array("x" => 946665000000, "y" => 3289000),
+                  array("x" => 978287400000, "y" => 3830000),
+                  array("x" => 1009823400000, "y" => 2009000),
+                  array("x" => 1041359400000, "y" => 2840000),
+                  array("x" => 1072895400000, "y" => 2396000),
+                  array("x" => 1104517800000, "y" => 1613000),
+                  array("x" => 1136053800000, "y" => 1821000),
+                  array("x" => 1167589800000, "y" => 2000000),
+                  array("x" => 1199125800000, "y" => 1397000),
+                  array("x" => 1230748200000, "y" => 2506000),
+                  array("x" => 1262284200000, "y" => 6704000),
+                  array("x" => 1293820200000, "y" => 5704000),
+                  array("x" => 1325356200000, "y" => 4009000),
+                  array("x" => 1356978600000, "y" => 3026000),
+                  array("x" => 1388514600000, "y" => 2394000),
+                  array("x" => 1420050600000, "y" => 1872000),
+                  array("x" => 1451586600000, "y" => 2140000)
+                 );
 
             ?>
             <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -193,30 +326,6 @@ $userRow = $result->fetch_assoc();
                     });
                     chart2.render();
 
-                    var chart = new CanvasJS.Chart("chartContainer", {
-                        backgroundColor: "#dee2d6",
-                        animationEnabled: true,
-                        theme: "light2",
-                        title: {
-                            text: "Calories per Exercise"
-                        },
-                        axisY: {
-                            suffix: "",
-                            scaleBreaks: {
-                                autoCalculate: true
-                            }
-                        },
-                        data: [{
-                            type: "column",
-                            yValueFormatString: "#,##0\"\"",
-                            indexLabel: "{y}",
-                            indexLabelPlacement: "inside",
-                            indexLabelFontColor: "white",
-                            dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-                        }]
-                    });
-                    chart.render();
-
                     var chart3 = new CanvasJS.Chart("chartContainer3", {
                         backgroundColor: "#dee2d6",
                         animationEnabled: true,
@@ -240,10 +349,96 @@ $userRow = $result->fetch_assoc();
                         }]
                     });
                     chart3.render();
+
+                     
+                    var chart4 = new CanvasJS.Chart("stackedChart", {
+                      title: {
+                        text: "Spending of Money Based on Household Composition"
+                      },
+                      theme: "light2",
+                      animationEnabled: true,
+                      toolTip:{
+                        shared: true,
+                        reversed: true
+                      },
+                      axisY: {
+                        suffix: "%"
+                      },
+                      data: [
+                        {
+                          type: "stackedColumn100",
+                          name: "Housing",
+                          showInLegend: true,
+                          yValueFormatString: "$#,##0 K",
+                          dataPoints: <?php echo json_encode($dataPoints10, JSON_NUMERIC_CHECK); ?>
+                        },{
+                          type: "stackedColumn100",
+                          name: "Transportation",
+                          showInLegend: true,
+                          yValueFormatString: "$#,##0 K",
+                          dataPoints: <?php echo json_encode($dataPoints20, JSON_NUMERIC_CHECK); ?>
+                        },{
+                          type: "stackedColumn100",
+                          name: "Food",
+                          showInLegend: true,
+                          yValueFormatString: "$#,##0 K",
+                          dataPoints: <?php echo json_encode($dataPoints30, JSON_NUMERIC_CHECK); ?>
+                        },{
+                          type: "stackedColumn100",
+                          name: "Insurance and Pastion",
+                          showInLegend: true,
+                          yValueFormatString: "$#,##0 K",
+                          dataPoints: <?php echo json_encode($dataPoints4, JSON_NUMERIC_CHECK); ?>
+                        },{
+                          type: "stackedColumn100",
+                          name: "Healthcare",
+                          showInLegend: true,
+                          yValueFormatString: "$#,##0 K",
+                          dataPoints: <?php echo json_encode($dataPoints5, JSON_NUMERIC_CHECK); ?>
+                        },{
+                          type: "stackedColumn100",
+                          name: "Entertainment",
+                          showInLegend: true,
+                          yValueFormatString: "$#,##0 K",
+                          dataPoints: <?php echo json_encode($dataPoints6, JSON_NUMERIC_CHECK); ?>
+                        },{
+                          type: "stackedColumn100",
+                          name: "Other",
+                          showInLegend: true,
+                          yValueFormatString: "$#,##0 K",
+                          dataPoints: <?php echo json_encode($dataPoints7, JSON_NUMERIC_CHECK); ?>
+                        }
+                      ]
+                    });
+                    
+                    chart4.render();
+
+                    var chart5 = new CanvasJS.Chart("lineChartExercises", {
+                    animationEnabled: true,
+                    title:{
+                      text: "Company Revenue by Year"
+                    },
+                    axisY: {
+                      title: "Revenue in USD",
+                      valueFormatString: "#0,,.",
+                      suffix: "mn",
+                      prefix: "$"
+                    },
+                    data: [{
+                      type: "spline",
+                      markerSize: 5,
+                      xValueFormatString: "YYYY",
+                      yValueFormatString: "$#,##0.##",
+                      xValueType: "dateTime",
+                      dataPoints: <?php echo json_encode($lineDataPoints, JSON_NUMERIC_CHECK); ?>
+                    }]
+                    });
+                      
+                      chart5.render();
             }
             </script>
 
-
+        <!--this is the first div of "Weights" tab-->
 
             <div id="pieChart" class="row justify-content-md-center" style="margin:20px; ">
                 <div class="col-sm-6" id="chartContainer2" style="height:350px;"></div>
@@ -272,14 +467,20 @@ $userRow = $result->fetch_assoc();
 
 
 
-        <!--this is the second div of "Exercises" tab-->
+        <!--this is the right side of "Exercises" tab-->
+
+        <div id="lineChart" class="row justify-content-md-center" style="margin:20px; padding:20px;">
+            <div class="col-sm-11" id="lineChartExercises" style="height:350px;"></div>
+        </div> 
+
+
         <div id="barChart" class="row justify-content-md-center" style="margin:20px; padding:20px;">
-            <div class="col-sm-11" id="chartContainer" style="height:350px;"></div>
-        </div>
+            <div class="col-sm-11" id="stackedChart" style="height:350px;"></div>
+        </div> 
 
 
         <!--This is the div showed when "choose exercise" is clicked-->
-        <div id="about_exercise" class="row container-fluid justify-content-between">
+        <!--        <div id="about_exercise" class="row container-fluid justify-content-between">
             <div id="info_about_exercise" class="col-sm-8">
                 <div class="container" style="margin-top:40px;">
                     <div class="row">
@@ -310,28 +511,25 @@ $userRow = $result->fetch_assoc();
                 <img id="pilates_img" alt="Responsive image" src="Resources/pilates.png" style="margin-top:20px; margin-right:20px;"/>
             </div>
 
-        </div> 
+        </div> -->
 
 
 
         <!--this is the last button div of "Exercises" tab-->
-        <div  class="row justify-content-md-center">
+       <!-- <div  class="row justify-content-md-center">
             <div id="choose_exercise" class="col-sm-8">Choose exercise</div>
-        </div>
-
-        <!--this is the first big div of "Graphs" tab-->
+        </div>-->
 
 
 
-        <div id="main_graph" class="row container justify-content-center" style="margin:20px; padding:20px;">
-            <div id="chartContainer3" class="col-sm-8" style="height: 300px;">
-            </div>
+        <!--this is the first big div of "Weights" tab-->
+        <div id="weight_graph" class="row container justify-content-center" style="margin:20px; padding:20px;">
+            <div id="chartContainer3" class="col-sm-11" style="height: 350px;"></div>
         </div>
 
       </div>
     </div>
-    </div>
-    </div>
+  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
@@ -342,27 +540,33 @@ $userRow = $result->fetch_assoc();
         }
 
       $(document).ready(function () {
-        $("#pieChart").show();
-        $("#graph_number").show();
-        $("#choose_exercise").show();
-        $("#about_exercise").hide();
-        $("#about_exercise_text").hide();
-        $("#main_graph").hide();
-        $("#graph_number_2").hide();
+        $("#barChart").show();
+        $("#historyRow").show();
+        $("#exercisesPageHeadings").show();
+        $("#lineChart").show();
+
+        
+        $("#weightsRow").hide();
+        $("#weightPageHeadings").hide();
+        $("#pieChart").hide();
+        $("#weight_graph").hide();
       });
 
       $(document).ready(function () {
         $("#coll_slider").click(function () {
-          $("#pieChart").show();
           $("#barChart").show();
-          $("#choose_exercise").show();
-          $("#main_graph").hide();
-          $("#graph_number_2").hide();
-          $("#about_exercise").hide();
-          $("#about_exercise_text").hide();
+          $("#historyRow").show();
+          $("#exercisesPageHeadings").show();
+          $("#lineChart").show();
+        
+          $("#weightsRow").show();
+          $("#weightPageHeadings").hide();
+          $("#weight_graph").hide();
+          $("#pieChart").hide();
+          
           $("#colr_slider").css("background-color", "white");
           $("#coll_slider").css("background-color", "#EDE6F2");
-          $("#choose_exercise").text("Choose exercise");
+
         });
       });
 
@@ -372,7 +576,7 @@ $userRow = $result->fetch_assoc();
             $(this).css("background-color", "#CAB9D6");
           },
           function () {
-            if ($("#pieChart").is(":hidden")) {
+            if ($("#pieChart").is(":visible")) {
               $(this).css("background-color", "white");
             } else {
               $(this).css("background-color", "#EDE6F2");
@@ -385,13 +589,15 @@ $userRow = $result->fetch_assoc();
         $("#colr_slider").click(function () {
           $("#coll_slider").css("background-color", "white");
           $("#colr_slider").css("background-color", "#EDE6F2");
-          $("#pieChart").hide();
           $("#barChart").hide();
-          $("#choose_exercise").hide();
-          $("#about_exercise").hide();
-          $("#about_exercise_text").hide();
-          $("#main_graph").show();
-          $("#graph_number_2").show();
+          $("#historyRow").hide();
+          $("#exercisesPageHeadings").hide();
+          $("#lineChart").hide();
+        
+          $("#weightsRow").show();
+          $("#weightPageHeadings").show();
+          $("#weight_graph").show();
+          $("#pieChart").show();
         });
       });
 
@@ -401,8 +607,7 @@ $userRow = $result->fetch_assoc();
             $(this).css("background-color", "#CAB9D6");
           },
           function () {
-            if ($("#main_graph").is(":hidden")) {
-              //ovdje promijeni coll_pie u element sa druge stranice
+            if ($("#weight_graph").is(":hidden")) {
               $(this).css("background-color", "white");
             } else {
               $(this).css("background-color", "#EDE6F2");
@@ -411,34 +616,7 @@ $userRow = $result->fetch_assoc();
         );
       });
 
-      $(document).ready(function () {
-        $("#choose_exercise").hover(
-          function () {
-            $(this).css("background-color", "#CAB9D6");
-          },
-          function () {
-            $(this).css("background-color", "#EDE6F2");
-          }
-        );
-      });
 
-      $(document).ready(function () {
-        $("#choose_exercise").click(function () {
-          if (this.innerHTML === "Choose exercise") {
-            $("#pieChart").hide();
-            $("#barChart").hide();
-            $("#about_exercise").show();
-            $("#about_exercise_text").show();
-            this.innerHTML = "Exit exercise";
-          } else {
-            $("#pieChart").show();
-            $("#barChart").show();
-            $("#about_exercise").hide();
-            $("#about_exercise_text").hide();
-            this.innerHTML = "Choose exercise";
-          }
-        });
-      });
     </script>
   </body>
 </html>
