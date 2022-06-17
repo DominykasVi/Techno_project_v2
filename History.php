@@ -52,166 +52,166 @@ $userRow = $result->fetch_assoc();
         </div>
       </div>
 
-        <div id="exercisesPageHeadings" class="row justify-content-center">
-          <div class="col-sm-4"></div>
-          <div class="col-sm-5 headingText">Exercise</div>
-          <div class="col-sm-2 headingText">Status</div>
-        </div>
+      <div id="exercisesPageHeadings" class="row justify-content-center">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-5 headingText">Exercise</div>
+        <div class="col-sm-2 headingText">Status</div>
+      </div>
 
-        <div id="weightPageHeadings" class="row justify-content-center">
-          <div class="col-sm-4"></div>
-          <div class="col-sm-4 headingText">Weight</div>
-          <div class="col-sm-3 headingText">Date</div>
-        </div>
+      <div id="weightPageHeadings" class="row justify-content-center">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4 headingText">Weight</div>
+        <div class="col-sm-3 headingText">Date</div>
+      </div>
 
 
-        <div class="row align-items-center" id="historyRow">
-          <div id="exerciseList" class="container align-items-center">
-            <div class="row align-items-center">
-              <?php
-              $sql = "SELECT * FROM exercises";
-              $exerciseResults = $db->query($sql);
-              $exerciseDict = [];
-              if ($exerciseResults->num_rows > 0) {
-                // output data of each row
-                while ($row = $exerciseResults->fetch_assoc()) {
-                  $exerciseDict[$row['id']] = [$row['name'], $row['image_link']];
-                }
+      <div class="row align-items-center" id="historyRow">
+        <div id="exerciseList" class="container align-items-center">
+          <div class="row align-items-center">
+            <?php
+            $sql = "SELECT * FROM exercises";
+            $exerciseResults = $db->query($sql);
+            $exerciseDict = [];
+            if ($exerciseResults->num_rows > 0) {
+              // output data of each row
+              while ($row = $exerciseResults->fetch_assoc()) {
+                $exerciseDict[$row['id']] = [$row['name'], $row['image_link']];
               }
+            }
 
-              $sql = "SELECT id, exercise_id, location, people, status FROM
+            $sql = "SELECT id, exercise_id, location, people, status FROM
                             history WHERE user_id=$id ORDER BY id DESC LIMIT 6";
-              $historyResults = $db->query($sql);
-              if ($historyResults->num_rows > 0) {
-                // output data of each row
-                while ($row = $historyResults->fetch_assoc()) {
-                  printImage($exerciseDict[$row['exercise_id']][1]);
-                  printName($exerciseDict[$row['exercise_id']][0]);
-                  printStatus($row['status'], $row['id']);
-                }
-              } else {
-                echo "0 results";
+            $historyResults = $db->query($sql);
+            if ($historyResults->num_rows > 0) {
+              // output data of each row
+              while ($row = $historyResults->fetch_assoc()) {
+                printImage($exerciseDict[$row['exercise_id']][1]);
+                printName($exerciseDict[$row['exercise_id']][0]);
+                printStatus($row['status'], $row['id']);
               }
-              $db->close();
+            } else {
+              echo "0 results";
+            }
+            $db->close();
 
-              function printImage($img)
-              {
-                echo '<div class="col-sm-2 w-90">';
-                echo '<img id="exerciseImage" src="';
-                echo $img;
-                echo '"></img>';
-                echo '</div>';
-              }
+            function printImage($img)
+            {
+              echo '<div class="col-sm-2 w-90">';
+              echo '<img id="exerciseImage" src="';
+              echo $img;
+              echo '"></img>';
+              echo '</div>';
+            }
 
-              function printName($name)
-              {
-                echo '<div class="col-sm-8 historyText">';
-                echo '<p class="exerciseInfo">';
-                echo $name;
-                echo '</p>';
-                echo '</div>';
-              }
+            function printName($name)
+            {
+              echo '<div class="col-sm-8 historyText">';
+              echo '<p class="exerciseInfo">';
+              echo $name;
+              echo '</p>';
+              echo '</div>';
+            }
 
-              function printStatus($status, $id)
-              {
-                $statusDict = [
-                  "Not completed" => "#ff0000",
-                  "In progress" => "#ffff00",
-                  "Done" => "#32cd32"
-                ];
+            function printStatus($status, $id)
+            {
+              $statusDict = [
+                "Not completed" => "#ff0000",
+                "In progress" => "#ffff00",
+                "Done" => "#32cd32"
+              ];
 
-                echo '<div class="col-sm-1">';
-                echo '<div class="status"';
+              echo '<div class="col-sm-1">';
+              echo '<div class="status"';
 
-                echo 'id="';
-                echo $id;
-                echo '"';
-                // echo 'id="18"';
+              echo 'id="';
+              echo $id;
+              echo '"';
+              // echo 'id="18"';
 
-                echo ' onclick="copyExercise(';
-                echo $id;
-                echo ')"';
+              echo ' onclick="copyExercise(';
+              echo $id;
+              echo ')"';
 
-                echo ' style="background-color:';
-                echo $statusDict[$status];
-                echo '"';
-                echo '></div>';
-                echo '</div>';
-              }
-              ?>
-            </div>
-          </div>
-          <div class="text-center" style="width: 100%">
-            <button id="copyButton" onclick="copyExercises()">Copy selected exercises</button>
+              echo ' style="background-color:';
+              echo $statusDict[$status];
+              echo '"';
+              echo '></div>';
+              echo '</div>';
+            }
+            ?>
           </div>
         </div>
+        <div class="text-center" style="width: 100%">
+          <button id="copyButton" onclick="copyExercises()">Copy selected exercises</button>
+        </div>
+      </div>
 
 
-        <div class="row align-items-center" id="weightsRow">
-          <div id="weightsList" class="container align-items-center">
-            <div class="row align-items-center">
+      <div class="row align-items-center" id="weightsRow">
+        <div id="weightsList" class="container align-items-center">
+          <div class="row align-items-center">
 
-              <!-- TODO php for listing all weights -->
-
-
-              <?php
-              //     $sql2 = "SELECT * FROM exercises";
-              //     $exerciseResults2 = $db->query($sql2);
-              //     $exerciseDict2 = [];
-              //     if ($exerciseResults2->num_rows > 0) {
-              //         // output data of each row
-              //         while($row2 = $exerciseResults2->fetch_assoc()) {
-              //             $exerciseDict2[$row2['id']] = [$row2['name'], $row2['image_link']];
-              //         }
-              //         }
-
-              //     $sql2 = "SELECT id, user_id, weight, date FROM
-              //     weights WHERE user_id=$id ORDER BY id DESC LIMIT 6";
-              //     $historyResults2 = $db->query($sql2);
-              //     if ($historyResults2->num_rows > 0) {
-              //     // output data of each row
-              //         while($row2 = $historyResults2->fetch_assoc()) {
-              //         printImage2($exerciseDict2[$row2['exercise_id']][1]);
-              //         printWeight($row2['weight']);
-              //         printDate($row2['date']);
-              //         }
-              //     } else {
-              //         echo "0 results";
-              //     }
-              //     $db->close();
-
-              //     function printImage2($img){
-
-              //         echo '<div class="col-sm-3 w-90">';
-              //         echo '<img id="exerciseImage" src="';
-              //         echo $img;
-              //         echo '"></img>';
-              //         echo '</div>';
-
-              //     }
-
-              //     function printWeight($weight){
-              //       echo '<div class="col-md-6 historyText">';
-              //       echo '<p class="exerciseInfo">';
-              //       echo $weight;
-              //       echo '</p>';
-              //       echo '</div>';
-              //   }
-
-              //   function printDate($date){
-              //     echo '<div class="col-md-6 historyText">';
-              //     echo '<p class="exerciseInfo">';
-              //     echo $date;
-              //     echo '</p>';
-              //     echo '</div>';
-              //   }
+            <!-- TODO php for listing all weights -->
 
 
-              // 
-              ?>
-            </div>
+            <?php
+            //     $sql2 = "SELECT * FROM exercises";
+            //     $exerciseResults2 = $db->query($sql2);
+            //     $exerciseDict2 = [];
+            //     if ($exerciseResults2->num_rows > 0) {
+            //         // output data of each row
+            //         while($row2 = $exerciseResults2->fetch_assoc()) {
+            //             $exerciseDict2[$row2['id']] = [$row2['name'], $row2['image_link']];
+            //         }
+            //         }
+
+            //     $sql2 = "SELECT id, user_id, weight, date FROM
+            //     weights WHERE user_id=$id ORDER BY id DESC LIMIT 6";
+            //     $historyResults2 = $db->query($sql2);
+            //     if ($historyResults2->num_rows > 0) {
+            //     // output data of each row
+            //         while($row2 = $historyResults2->fetch_assoc()) {
+            //         printImage2($exerciseDict2[$row2['exercise_id']][1]);
+            //         printWeight($row2['weight']);
+            //         printDate($row2['date']);
+            //         }
+            //     } else {
+            //         echo "0 results";
+            //     }
+            //     $db->close();
+
+            //     function printImage2($img){
+
+            //         echo '<div class="col-sm-3 w-90">';
+            //         echo '<img id="exerciseImage" src="';
+            //         echo $img;
+            //         echo '"></img>';
+            //         echo '</div>';
+
+            //     }
+
+            //     function printWeight($weight){
+            //       echo '<div class="col-md-6 historyText">';
+            //       echo '<p class="exerciseInfo">';
+            //       echo $weight;
+            //       echo '</p>';
+            //       echo '</div>';
+            //   }
+
+            //   function printDate($date){
+            //     echo '<div class="col-md-6 historyText">';
+            //     echo '<p class="exerciseInfo">';
+            //     echo $date;
+            //     echo '</p>';
+            //     echo '</div>';
+            //   }
+
+
+            // 
+            ?>
           </div>
         </div>
+      </div>
 
 
     </div>
@@ -314,6 +314,18 @@ $userRow = $result->fetch_assoc();
 
       <script>
         window.onload = function() {
+
+          function setVisibility() {
+            if ($('#view').val() !== "-1") {
+              $('#statusText').text("Copy");
+
+              $('.status').css("background-color", "white");
+
+            } else {
+              $('#copyButton').hide();
+
+            }
+          }
 
           var chart2 = new CanvasJS.Chart("chartContainer2", {
             backgroundColor: "#f3f8f2",
@@ -549,19 +561,6 @@ $userRow = $result->fetch_assoc();
     function goToProfilePage() {
       window.location.href = 'profile.php';
       return false;
-    }
-    window.onload = setVisibility();
-
-    function setVisibility() {
-      if ($('#view').val() !== "-1") {
-        $('#statusText').text("Copy");
-
-        $('.status').css("background-color", "white");
-
-      } else {
-        $('#copyButton').hide();
-
-      }
     }
 
     var exercisesToCopy = []
