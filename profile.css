@@ -124,7 +124,7 @@ input {
 #status {
   background-color: #32cd32;
 }
-#exerciseImage {
+.exerciseImage {
   width: 150%;
   height: auto;
   border-radius: 50%;

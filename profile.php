@@ -326,7 +326,7 @@ $userRow = $result->fetch_assoc();
                   if ($historyResults->num_rows > 0) {
                   // output data of each row
                     while($row = $historyResults->fetch_assoc()) {
-                      printImage($exerciseDict[$row['exercise_id']][1]);
+                      printImage($exerciseDict[$row['exercise_id']][1], $row['id']);
                       printName($exerciseDict[$row['exercise_id']][0]);
                       printGeneral($row['location']);
                       printGeneral($row['people']);
@@ -337,11 +337,30 @@ $userRow = $result->fetch_assoc();
                   }
                   $db->close();
 
-                  function printImage($img){
+                  function printImage($img, $id){
                     echo '<div class="col-sm-1">';
-                    echo '<img id="exerciseImage" src="';
+                    echo '<img class="exerciseImage" src="';
                     echo $img;
-                    echo '"></img>';
+                    echo '"';
+
+                    echo ' id="img';
+                    echo $id;
+                    echo '" ';
+
+                    echo 'onmouseover="mouseOver(';
+                    echo $id;
+                    echo ')" onmouseout="mouseOut(';
+                    echo $id;
+                    echo ", '";
+                    echo $img;
+                    echo "'";
+                    echo ')"';
+
+                    echo 'onclick="deleteExercise(';
+                    echo $id;
+                    echo ')"';
+
+                    echo '></img>';
                     echo '</div>';
 
                   }
@@ -442,6 +461,17 @@ $userRow = $result->fetch_assoc();
       }
     }
 
+    function mouseOver(id){
+      let img = "Resources/close.png";
+      let imgID = "#img" + id.toString();
+      $(imgID).attr("src",img);
+    }
+
+    function mouseOut(id, img){
+      let imgID = "#img" + id.toString();
+      $(imgID).attr("src",img);
+    }
+
     function changeStatus(id){
       var statusID = "#" + id.toString();
       let color = $(statusID).css("background-color");
@@ -455,6 +485,19 @@ $userRow = $result->fetch_assoc();
         $(statusID).css("background-color", "#32CD32");
         updateStatusDB(2, id);
       }
+    }
+
+    function deleteExercise(id){
+      $.ajax({
+          type: "POST",
+          url: "db_manager.php",
+          data: {function: "deleteExercise", "id": id},
+          success: function(result){
+            // alert(result)
+            alert("Exercise has been deleted");
+            window.location.reload();
+          }
+      });
     }
 
     var statusValues = {
@@ -471,8 +514,8 @@ $userRow = $result->fetch_assoc();
           data: {function: "updateExercise", "id": id,
                 "value": statusValues[value]},
           success: function(result){
-            alert(result)
-            // alert("Exercise has been updated");
+            // alert(result)
+            alert("Exercise has been updated");
           }
       });
     }

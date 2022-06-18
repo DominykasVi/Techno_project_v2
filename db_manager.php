@@ -21,7 +21,20 @@ switch ($_REQUEST["function"]){
     case "updateExercise":
         updateExercise($db);
         break;
+    case "deleteExercise":
+        deleteExercise($db);
+        break;
 }
+
+function deleteExercise($db){
+    $id = mysqli_real_escape_string($db, $_REQUEST['id']);
+    $sql = "DELETE FROM history WHERE id = $id";
+    if ($db->query($sql) === TRUE) {
+        echo "Success";
+    } else {
+        echo "Error: " . $sql . "<br>" . $db->error;
+    }
+};
 
 function updateExercise($db){
     
@@ -29,7 +42,7 @@ function updateExercise($db){
     $id = mysqli_real_escape_string($db, $_REQUEST['id']);
     $date = date('Y-m-d');
     $sql = "UPDATE history SET status = '$status', date='$date'  WHERE id = $id";
-    echo $sql;
+    // echo $sql;
     if ($db->query($sql) === TRUE) {
         echo "Success";
     } else {
