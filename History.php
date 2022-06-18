@@ -5,7 +5,7 @@ session_start();
 $_SESSION['id'] = 1;
 $id = $_SESSION['id'];
 
-$_SESSION['guest_id'] = -1
+ $_SESSION['guest_id'] = -1
 ?>
 
 
@@ -43,15 +43,14 @@ $_SESSION['guest_id'] = -1
       </div>
 
       <div id="exercisesPageHeadings" class="row justify-content-center">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-5 headingText">Exercise</div>
-        <div class="col-sm-2 headingText">Status</div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-7 headingText">Exercise</div>
+        <div class="col-sm-1 headingText">Status</div>
       </div>
 
       <div id="weightPageHeadings" class="row justify-content-center">
-        <div class="col-sm-4"></div>
         <div class="col-sm-4 headingText">Weight</div>
-        <div class="col-sm-3 headingText">Date</div>
+        <div class="col-sm-4 headingText">Date</div>
       </div>
 
 
@@ -82,7 +81,7 @@ $_SESSION['guest_id'] = -1
             } else {
               echo "0 results";
             }
-            $db->close();
+            //$db->close();
 
             function printImage($img)
             {
@@ -140,64 +139,42 @@ $_SESSION['guest_id'] = -1
       <div class="row align-items-center" id="weightsRow">
         <div id="weightsList" class="container align-items-center">
           <div class="row align-items-center">
-
-            <!-- TODO php for listing all weights -->
-
-
             <?php
-            //     $sql2 = "SELECT * FROM exercises";
-            //     $exerciseResults2 = $db->query($sql2);
-            //     $exerciseDict2 = [];
-            //     if ($exerciseResults2->num_rows > 0) {
-            //         // output data of each row
-            //         while($row2 = $exerciseResults2->fetch_assoc()) {
-            //             $exerciseDict2[$row2['id']] = [$row2['name'], $row2['image_link']];
-            //         }
-            //         }
+                $sql2 = "SELECT id, weight, date FROM weights WHERE user_id=$id ORDER BY id DESC";
+                $weightRsesults2 = $db->query($sql2);
+                if ($weightRsesults2->num_rows > 0) {
+                // output data of each row
+                    while($row2 = $weightRsesults2->fetch_assoc()) {
+                      printSpace();
+                      printWeight($row2['weight']);
+                      printDate($row2['date']);
+                    }
+                } else {
+                    echo "0 results";
+                }
+                //$db->close();
 
-            //     $sql2 = "SELECT id, user_id, weight, date FROM
-            //     weights WHERE user_id=$id ORDER BY id DESC LIMIT 6";
-            //     $historyResults2 = $db->query($sql2);
-            //     if ($historyResults2->num_rows > 0) {
-            //     // output data of each row
-            //         while($row2 = $historyResults2->fetch_assoc()) {
-            //         printImage2($exerciseDict2[$row2['exercise_id']][1]);
-            //         printWeight($row2['weight']);
-            //         printDate($row2['date']);
-            //         }
-            //     } else {
-            //         echo "0 results";
-            //     }
-            //     $db->close();
+                function printSpace(){
+                  echo '<div class="col-md-2">';
+                  echo '</div>';
+                }
 
-            //     function printImage2($img){
+                function printWeight($weight){
+                  echo '<div class="col-md-4 historyText">';
+                  echo '<p class="weightInfo">';
+                  echo $weight;
+                  echo '</p>';
+                  echo '</div>';
+                }
 
-            //         echo '<div class="col-sm-3 w-90">';
-            //         echo '<img id="exerciseImage" src="';
-            //         echo $img;
-            //         echo '"></img>';
-            //         echo '</div>';
-
-            //     }
-
-            //     function printWeight($weight){
-            //       echo '<div class="col-md-6 historyText">';
-            //       echo '<p class="exerciseInfo">';
-            //       echo $weight;
-            //       echo '</p>';
-            //       echo '</div>';
-            //   }
-
-            //   function printDate($date){
-            //     echo '<div class="col-md-6 historyText">';
-            //     echo '<p class="exerciseInfo">';
-            //     echo $date;
-            //     echo '</p>';
-            //     echo '</div>';
-            //   }
-
-
-            // 
+                function printDate($date){
+                  echo '<div class="col-md-4 historyText">';
+                  echo '<p class="weightInfo">';
+                  echo $date;
+                  echo '</p>';
+                  echo '</div>';
+                  echo '<div class="col-md-2 historyText"></div>';
+                }
             ?>
           </div>
         </div>
@@ -215,88 +192,134 @@ $_SESSION['guest_id'] = -1
       <!--this is the first big div of "Exercises" tab-->
       <?php
 
-      $dataPoints2 = array(
-        array("label" => "Done", "y" => 51.7),
-        array("label" => "In progress", "y" => 26.6),
-        array("label" => "Not completed", "y" => 21.7)
-      );
+         $sql = "SELECT * from history WHERE user_id=$id";
+         if ($result = mysqli_query($db, $sql)) {
+            $total = mysqli_num_rows( $result );
+         }
+         $sql = "SELECT * from history WHERE user_id=$id AND status = 'Done'";
+         if ($result = mysqli_query($db, $sql)) {
+            $done = mysqli_num_rows( $result );
+         }
+         $sql = "SELECT * from history WHERE user_id=$id AND status = 'In progress'";
+         if ($result = mysqli_query($db, $sql)) {
+            $inProgress = mysqli_num_rows( $result );
+         }
+         $sql = "SELECT * from history WHERE user_id=$id AND status = 'Not completed'";
+         if ($result = mysqli_query($db, $sql)) {
+            $notCompleted = mysqli_num_rows( $result );
+         }
+        $dataStatusPie = array(
+          array("label" => "Done", "y" => $done/$total),
+          array("label" => "In progress", "y" => $inProgress/$total),
+          array("label" => "Not completed", "y" => $notCompleted/$total)
+        );
 
-      $dataPoints3 = array(
-        array("y" => 7, "label" => "March"),
-        array("y" => 12, "label" => "April"),
-        array("y" => 28, "label" => "May"),
-        array("y" => 18, "label" => "June"),
-        array("y" => 41, "label" => "July")
-      );
 
-      $dataPoints10 = array(
-        array("label" => "Single", "y" => 13),
-        array("label" => "Married", "y" => 21),
-        array("label" => "Married and have Kids", "y" => 24),
-        array("label" => "Single Parent", "y" => 15)
-      );
 
-      $dataPoints20 = array(
-        array("label" => "Single", "y" => 6),
-        array("label" => "Married", "y" => 12),
-        array("label" => "Married and have Kids", "y" => 13),
-        array("label" => "Single Parent", "y" => 7)
-      );
 
-      $dataPoints30 = array(
-        array("label" => "Single", "y" => 5),
-        array("label" => "Married", "y" => 9),
-        array("label" => "Married and have Kids", "y" => 10),
-        array("label" => "Single Parent", "y" => 6)
-      );
+        $sql = "SELECT id, weight, date FROM weights WHERE user_id=$id ORDER BY id ASC LIMIT 10";
+        $weightResults = $db->query($sql);
+        if ($weightResults->num_rows > 0) {
+        // output data of each row
+        $dataWeightChart = array();
+          while ($row = $weightResults->fetch_assoc()) {
+            array_push($dataWeightChart, array("y" => $row['weight'],"label" => $row['date']));
+          }
+        } else {
+          echo "0 results";
+        }
 
-      $dataPoints4 = array(
-        array("label" => "Single", "y" => 3),
-        array("label" => "Married", "y" => 8),
-        array("label" => "Married and have Kids", "y" => 9),
-        array("label" => "Single Parent", "y" => 3)
-      );
+        // $dataWeightChart = array(
+        //   array("y" => 7, "label" => "March"),
+        //   array("y" => 12, "label" => "April"),
+        //   array("y" => 28, "label" => "May"),
+        //   array("y" => 18, "label" => "June"),
+        //   array("y" => 41, "label" => "July")
+        // );
 
-      $dataPoints5 = array(
-        array("label" => "Single", "y" => 3),
-        array("label" => "Married", "y" => 5),
-        array("label" => "Married and have Kids", "y" => 4),
-        array("label" => "Single Parent", "y" => 2)
-      );
+        $dataPoints10 = array(
+          array("label" => "Single", "y" => 13),
+          array("label" => "Married", "y" => 21),
+          array("label" => "Married and have Kids", "y" => 24),
+          array("label" => "Single Parent", "y" => 15)
+        );
 
-      $dataPoints6 = array(
-        array("label" => "Single", "y" => 2),
-        array("label" => "Married", "y" => 3),
-        array("label" => "Married and have Kids", "y" => 4),
-        array("label" => "Single Parent", "y" => 2)
-      );
+        $dataPoints20 = array(
+          array("label" => "Single", "y" => 6),
+          array("label" => "Married", "y" => 12),
+          array("label" => "Married and have Kids", "y" => 13),
+          array("label" => "Single Parent", "y" => 7)
+        );
 
-      $dataPoints7 = array(
-        array("label" => "Single", "y" => 5),
-        array("label" => "Married", "y" => 9),
-        array("label" => "Married and have Kids", "y" => 9),
-        array("label" => "Single Parent", "y" => 5)
-      );
+        $dataPoints30 = array(
+          array("label" => "Single", "y" => 5),
+          array("label" => "Married", "y" => 9),
+          array("label" => "Married and have Kids", "y" => 10),
+          array("label" => "Single Parent", "y" => 6)
+        );
 
-      $lineDataPoints = array(
-        array("x" => 946665000000, "y" => 3289000),
-        array("x" => 978287400000, "y" => 3830000),
-        array("x" => 1009823400000, "y" => 2009000),
-        array("x" => 1041359400000, "y" => 2840000),
-        array("x" => 1072895400000, "y" => 2396000),
-        array("x" => 1104517800000, "y" => 1613000),
-        array("x" => 1136053800000, "y" => 1821000),
-        array("x" => 1167589800000, "y" => 2000000),
-        array("x" => 1199125800000, "y" => 1397000),
-        array("x" => 1230748200000, "y" => 2506000),
-        array("x" => 1262284200000, "y" => 6704000),
-        array("x" => 1293820200000, "y" => 5704000),
-        array("x" => 1325356200000, "y" => 4009000),
-        array("x" => 1356978600000, "y" => 3026000),
-        array("x" => 1388514600000, "y" => 2394000),
-        array("x" => 1420050600000, "y" => 1872000),
-        array("x" => 1451586600000, "y" => 2140000)
-      );
+        $dataPoints4 = array(
+          array("label" => "Single", "y" => 3),
+          array("label" => "Married", "y" => 8),
+          array("label" => "Married and have Kids", "y" => 9),
+          array("label" => "Single Parent", "y" => 3)
+        );
+
+        $dataPoints5 = array(
+          array("label" => "Single", "y" => 3),
+          array("label" => "Married", "y" => 5),
+          array("label" => "Married and have Kids", "y" => 4),
+          array("label" => "Single Parent", "y" => 2)
+        );
+
+        $dataPoints6 = array(
+          array("label" => "Single", "y" => 2),
+          array("label" => "Married", "y" => 3),
+          array("label" => "Married and have Kids", "y" => 4),
+          array("label" => "Single Parent", "y" => 2)
+        );
+
+        $dataPoints7 = array(
+          array("label" => "Single", "y" => 5),
+          array("label" => "Married", "y" => 9),
+          array("label" => "Married and have Kids", "y" => 9),
+          array("label" => "Single Parent", "y" => 5)
+        );
+
+
+
+        // $sql = "SELECT id, weight, date FROM weights WHERE user_id=$id ORDER BY id ASC LIMIT 10";
+        // $weightResults = $db->query($sql);
+        // if ($weightResults->num_rows > 0) {
+        // // output data of each row
+        // $lineDataPoints = array();
+        //   while ($row = $weightResults->fetch_assoc()) {
+        //     array_push($lineDataPoints, array("y" => $row['weight'],"label" => $row['date']));
+        //   }
+        // } else {
+        //   echo "0 results";
+        // }
+
+
+        $lineDataPoints = array(
+          array("x" => 946665000000, "y" => 3289000),
+          array("x" => 978287400000, "y" => 3830000),
+          array("x" => 1009823400000, "y" => 2009000),
+          array("x" => 1041359400000, "y" => 2840000),
+          array("x" => 1072895400000, "y" => 2396000),
+          array("x" => 1104517800000, "y" => 1613000),
+          array("x" => 1136053800000, "y" => 1821000),
+          array("x" => 1167589800000, "y" => 2000000),
+          array("x" => 1199125800000, "y" => 1397000),
+          array("x" => 1230748200000, "y" => 2506000),
+          array("x" => 1262284200000, "y" => 6704000),
+          array("x" => 1293820200000, "y" => 5704000),
+          array("x" => 1325356200000, "y" => 4009000),
+          array("x" => 1356978600000, "y" => 3026000),
+          array("x" => 1388514600000, "y" => 2394000),
+          array("x" => 1420050600000, "y" => 1872000),
+          array("x" => 1451586600000, "y" => 2140000)
+        );
 
       ?>
       <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -314,7 +337,7 @@ $_SESSION['guest_id'] = -1
             }
           }
           setVisibility();
-          var chart2 = new CanvasJS.Chart("chartContainer2", {
+          var chart2 = new CanvasJS.Chart("statusPie", {
             backgroundColor: "#f3f8f2",
             theme: "light2",
             animationEnabled: true,
@@ -331,16 +354,16 @@ $_SESSION['guest_id'] = -1
               indexLabelFontWeight: "bolder",
               showInLegend: true,
               legendText: "{label}",
-              dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
+              dataPoints: <?php echo json_encode($dataStatusPie, JSON_NUMERIC_CHECK); ?>
             }]
           });
           chart2.render();
 
-          var chart3 = new CanvasJS.Chart("chartContainer3", {
+          var chart3 = new CanvasJS.Chart("weightChart", {
             backgroundColor: "#dee2d6",
             animationEnabled: true,
             title: {
-              text: "Weight per dates of exercises"
+              text: "Weight per dates"
             },
             axisY: {
               title: "Weight in kilograms",
@@ -350,12 +373,12 @@ $_SESSION['guest_id'] = -1
             },
             data: [{
               type: "bar",
-              yValueFormatString: "#,##0",
+              yValueFormatString: "#,##0.00",
               indexLabel: "{y}",
               indexLabelPlacement: "inside",
               indexLabelFontWeight: "bolder",
               indexLabelFontColor: "white",
-              dataPoints: <?php echo json_encode($dataPoints3, JSON_NUMERIC_CHECK); ?>
+              dataPoints: <?php echo json_encode($dataWeightChart, JSON_NUMERIC_CHECK); ?>
             }]
           });
           chart3.render();
@@ -449,27 +472,52 @@ $_SESSION['guest_id'] = -1
       <!--this is the first div of "Weights" tab-->
 
       <div id="pieChart" class="row justify-content-md-center" style="margin:20px; ">
-        <div class="col-sm-6" id="chartContainer2" style="height:350px;"></div>
+        <div class="col-sm-6" id="statusPie" style="height:350px;"></div>
         <div id="colr_status" class="col-sm-6 text-center">
           Your Statistics
           <div class="container-fluid">
             <div class="row justify-content-center">
               <div id="info_div" class="col-sm-5" style="font-size:20px;">
                 Done
-                <h4>1100</h4>
-                <!--TODO: Here calculate number of exercises-->
+                <?php
+                  $sql = "SELECT * from history WHERE user_id=$id AND status = 'Done'";
+                  if ($result = mysqli_query($db, $sql)) {
+                      $rowcount = mysqli_num_rows( $result );
+                      echo '<h4>';
+                      echo $rowcount;
+                      echo '</h4>';
+                  }
+                ?>
+                
               </div>
               <div id="info_div" class="col-sm-5" style="font-size:20px;">
                 In progress
-                <h4>1100</h4>
-                <!--TODO: Here calculate number of exercises-->
+                <?php
+                  $sql = "SELECT * from history WHERE user_id=$id AND status = 'In progress'";
+                  if ($result = mysqli_query($db, $sql)) {
+                      $rowcount = mysqli_num_rows( $result );
+                      echo '<h4>';
+                      echo $rowcount;
+                      echo '</h4>';
+                  }
+                ?>
               </div>
             </div>
+
             <div class="row justify-content-md-center">
               <div id="info_div" class="col-sm-5" style="font-size:20px;">
                 Not completed
-                <h4>1100</h4>
-                <!--TODO: Here calculate number of exercises-->
+                <?php
+                  $sql = "SELECT * from history WHERE user_id=$id AND status = 'Not completed'";
+                  if ($result = mysqli_query($db, $sql)) {
+                      $rowcount = mysqli_num_rows( $result );
+                      echo '<h4>';
+                      echo $rowcount;
+                      echo '</h4>';
+                  }
+
+                    $db->close();
+                ?>
               </div>
             </div>
           </div>
@@ -535,7 +583,7 @@ $_SESSION['guest_id'] = -1
 
       <!--this is the first big div of "Weights" tab-->
       <div id="weight_graph" class="row container justify-content-center" style="margin:20px; padding:20px;">
-        <div id="chartContainer3" class="col-sm-11" style="height: 350px;"></div>
+        <div id="weightChart" class="col-sm-11" style="height: 400px;"></div>
       </div>
 
     </div>
@@ -609,7 +657,7 @@ $_SESSION['guest_id'] = -1
         $("#exercisesPageHeadings").show();
         $("#lineChart").show();
 
-        $("#weightsRow").show();
+        $("#weightsRow").hide();
         $("#weightPageHeadings").hide();
         $("#weight_graph").hide();
         $("#pieChart").hide();
