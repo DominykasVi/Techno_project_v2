@@ -45,6 +45,9 @@ h2 {
   color: #758ecd;
   height: 40px;
 }
+#profileText{
+  font-weight: bold;
+}
 .mainHeading {
   font-size: 45px;
   color: #758ecd;

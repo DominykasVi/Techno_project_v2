@@ -35,7 +35,7 @@ $id = $_SESSION['id'];
     <div id="coll" class="container-fluid col-5">
       <div class="row align-items-center justify-content-center">
         <div class="col-sm-2">
-          <button class="btn" onclick="goToProfilePage()"><i class="fa fa-home"> Profile</i></button>
+          <button class="btn" onclick="goToProfilePage()"><i id="profileText" class="fa fa-home" > Profile</i></button>
         </div>
         <div class="mainHeading col-sm-9 text-center">
           History
@@ -189,7 +189,6 @@ $id = $_SESSION['id'];
         <div id="colr_slider" class="col col-sm-4">Weights</div>
       </div>
 
-      <!--this is the first big div of "Exercises" tab-->
       <?php
 
          $sql = "SELECT * from history WHERE user_id=$id";
@@ -215,12 +214,9 @@ $id = $_SESSION['id'];
         );
 
 
-
-
         $sql = "SELECT id, weight, date FROM weights WHERE user_id=$id ORDER BY id ASC LIMIT 10";
         $weightResults = $db->query($sql);
         if ($weightResults->num_rows > 0) {
-        // output data of each row
         $dataWeightChart = array();
           while ($row = $weightResults->fetch_assoc()) {
             array_push($dataWeightChart, array("y" => $row['weight'],"label" => $row['date']));
@@ -229,66 +225,7 @@ $id = $_SESSION['id'];
           echo "0 results";
         }
 
-        // $dataWeightChart = array(
-        //   array("y" => 7, "label" => "March"),
-        //   array("y" => 12, "label" => "April"),
-        //   array("y" => 28, "label" => "May"),
-        //   array("y" => 18, "label" => "June"),
-        //   array("y" => 41, "label" => "July")
-        // );
-
-        $dataPoints10 = array(
-          array("label" => "Single", "y" => 13),
-          array("label" => "Married", "y" => 21),
-          array("label" => "Married and have Kids", "y" => 24),
-          array("label" => "Single Parent", "y" => 15)
-        );
-
-        $dataPoints20 = array(
-          array("label" => "Single", "y" => 6),
-          array("label" => "Married", "y" => 12),
-          array("label" => "Married and have Kids", "y" => 13),
-          array("label" => "Single Parent", "y" => 7)
-        );
-
-        $dataPoints30 = array(
-          array("label" => "Single", "y" => 5),
-          array("label" => "Married", "y" => 9),
-          array("label" => "Married and have Kids", "y" => 10),
-          array("label" => "Single Parent", "y" => 6)
-        );
-
-        $dataPoints4 = array(
-          array("label" => "Single", "y" => 3),
-          array("label" => "Married", "y" => 8),
-          array("label" => "Married and have Kids", "y" => 9),
-          array("label" => "Single Parent", "y" => 3)
-        );
-
-        $dataPoints5 = array(
-          array("label" => "Single", "y" => 3),
-          array("label" => "Married", "y" => 5),
-          array("label" => "Married and have Kids", "y" => 4),
-          array("label" => "Single Parent", "y" => 2)
-        );
-
-        $dataPoints6 = array(
-          array("label" => "Single", "y" => 2),
-          array("label" => "Married", "y" => 3),
-          array("label" => "Married and have Kids", "y" => 4),
-          array("label" => "Single Parent", "y" => 2)
-        );
-
-        $dataPoints7 = array(
-          array("label" => "Single", "y" => 5),
-          array("label" => "Married", "y" => 9),
-          array("label" => "Married and have Kids", "y" => 9),
-          array("label" => "Single Parent", "y" => 5)
-        );
-
-
-
-        // $sql = "SELECT id, weight, date FROM weights WHERE user_id=$id ORDER BY id ASC LIMIT 10";
+        // $sql = "SELECT * FROM exercises WHERE user_id=$id ORDER BY date ACS";
         // $weightResults = $db->query($sql);
         // if ($weightResults->num_rows > 0) {
         // // output data of each row
@@ -320,6 +257,32 @@ $id = $_SESSION['id'];
           array("x" => 1420050600000, "y" => 1872000),
           array("x" => 1451586600000, "y" => 2140000)
         );
+
+        $sql = "SELECT * from history WHERE user_id=$id";
+        if ($result = mysqli_query($db, $sql)) {
+           $total = mysqli_num_rows( $result );
+        }
+
+        $sql = "SELECT * FROM exercises";
+            $exerciseResults = $db->query($sql);
+            $exerciseDict = []; 
+            if ($exerciseResults->num_rows > 0) {
+              while ($row = $exerciseResults->fetch_assoc()) {
+                $exerciseDict[$row['id']] = [$row['name'], $row['image_link']];
+              }
+            }
+
+
+        $sql = "SELECT exercise_id, COUNT(*) as count from history WHERE user_id=$id GROUP BY exercise_id";
+        $result = $db->query($sql);
+          if ($result->num_rows > 0) {
+            $dataExercisePie = array();
+            while ($row = $result->fetch_assoc()) {
+              array_push($dataExercisePie, array("label" => $exerciseDict[$row['exercise_id']][0], "y" => $row['count']/$total));
+            }
+          } else {
+            echo "0 results";
+          }
 
       ?>
       <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -383,69 +346,27 @@ $id = $_SESSION['id'];
           });
           chart3.render();
 
-
-          var chart4 = new CanvasJS.Chart("stackedChart", {
-            title: {
-              text: "Spending of Money Based on Household Composition"
-            },
-            theme: "light2",
-            animationEnabled: true,
-            toolTip: {
-              shared: true,
-              reversed: true
-            },
-            axisY: {
-              suffix: "%"
-            },
-            data: [{
-              type: "stackedColumn100",
-              name: "Housing",
-              showInLegend: true,
-              yValueFormatString: "$#,##0 K",
-              dataPoints: <?php echo json_encode($dataPoints10, JSON_NUMERIC_CHECK); ?>
-            }, {
-              type: "stackedColumn100",
-              name: "Transportation",
-              showInLegend: true,
-              yValueFormatString: "$#,##0 K",
-              dataPoints: <?php echo json_encode($dataPoints20, JSON_NUMERIC_CHECK); ?>
-            }, {
-              type: "stackedColumn100",
-              name: "Food",
-              showInLegend: true,
-              yValueFormatString: "$#,##0 K",
-              dataPoints: <?php echo json_encode($dataPoints30, JSON_NUMERIC_CHECK); ?>
-            }, {
-              type: "stackedColumn100",
-              name: "Insurance and Pastion",
-              showInLegend: true,
-              yValueFormatString: "$#,##0 K",
-              dataPoints: <?php echo json_encode($dataPoints4, JSON_NUMERIC_CHECK); ?>
-            }, {
-              type: "stackedColumn100",
-              name: "Healthcare",
-              showInLegend: true,
-              yValueFormatString: "$#,##0 K",
-              dataPoints: <?php echo json_encode($dataPoints5, JSON_NUMERIC_CHECK); ?>
-            }, {
-              type: "stackedColumn100",
-              name: "Entertainment",
-              showInLegend: true,
-              yValueFormatString: "$#,##0 K",
-              dataPoints: <?php echo json_encode($dataPoints6, JSON_NUMERIC_CHECK); ?>
-            }, {
-              type: "stackedColumn100",
-              name: "Other",
-              showInLegend: true,
-              yValueFormatString: "$#,##0 K",
-              dataPoints: <?php echo json_encode($dataPoints7, JSON_NUMERIC_CHECK); ?>
-            }]
+          var chart = new CanvasJS.Chart("exercisesPie", {
+          animationEnabled: true,
+          backgroundColor: "transparent",
+          title: {
+            text: "Percentage of Exercises Done"
+          },
+          subtitles: [{
+            text: ""
+          }],
+          data: [{
+            type: "pie",
+            yValueFormatString: "#,##0.00\"%\"",
+            indexLabel: "{label} ({y})",
+            dataPoints: <?php echo json_encode($dataExercisePie, JSON_NUMERIC_CHECK); ?>
+          }]
           });
-
-          chart4.render();
+          chart.render();
 
           var chart5 = new CanvasJS.Chart("lineChartExercises", {
             animationEnabled: true,
+            backgroundColor: "#dee2d6",
             title: {
               text: "Company Revenue by Year"
             },
@@ -525,7 +446,6 @@ $id = $_SESSION['id'];
       </div>
 
 
-
       <!--this is the right side of "Exercises" tab-->
 
       <div id="lineChart" class="row justify-content-md-center" style="margin:20px; padding:20px;">
@@ -534,51 +454,8 @@ $id = $_SESSION['id'];
 
 
       <div id="barChart" class="row justify-content-md-center" style="margin:20px; padding:20px;">
-        <div class="col-sm-11" id="stackedChart" style="height:350px;"></div>
+        <div class="col-sm-11" id="exercisesPie" style="height:350px;"></div>
       </div>
-
-
-      <!--This is the div showed when "choose exercise" is clicked-->
-      <!--        <div id="about_exercise" class="row container-fluid justify-content-between">
-            <div id="info_about_exercise" class="col-sm-8">
-                <div class="container" style="margin-top:40px;">
-                    <div class="row">
-                        <div class="col-sm-4" id="info_div" style="margin-right:10px;">
-                            Calories
-                            <h4>1100</h4>
-                            kcal
-                        </div>
-                        <div class="col-sm-4" id="info_div">
-                            Time spent
-                            <h4>4</h4>
-                            minutes
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col-sm-4" id="info_div" style="margin-right:10px;">
-                            Effort grade
-                            <h4>10/10</h4>
-                        </div>
-                        <div class="col-sm-4" id="info_div">
-                            <div>Status</div>
-                            <img id="load_char" src="Resources/round-chart.png" />
-                        </div>
-                    </div>
-                </div>          
-            </div>
-
-            <div class="col-sm-4">
-                <img id="pilates_img" alt="Responsive image" src="Resources/pilates.png" style="margin-top:20px; margin-right:20px;"/>
-            </div>
-
-        </div> -->
-
-
-
-      <!--this is the last button div of "Exercises" tab-->
-      <!-- <div  class="row justify-content-md-center">
-            <div id="choose_exercise" class="col-sm-8">Choose exercise</div>
-        </div>-->
-
 
 
       <!--this is the first big div of "Weights" tab-->
