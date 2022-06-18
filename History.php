@@ -5,6 +5,7 @@ session_start();
 $_SESSION['id'] = 1;
 $id = $_SESSION['id'];
 
+$_SESSION['guest_id'] = -1
 ?>
 
 
@@ -307,15 +308,12 @@ $id = $_SESSION['id'];
           function setVisibility() {
             if ($('#view').val() !== "-1") {
               $('#statusText').text("Copy");
-
               $('.status').css("background-color", "white");
-
             } else {
               $('#copyButton').hide();
-
             }
           }
-
+          setVisibility();
           var chart2 = new CanvasJS.Chart("chartContainer2", {
             backgroundColor: "#f3f8f2",
             theme: "light2",
