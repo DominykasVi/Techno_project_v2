@@ -40,7 +40,8 @@
       <form action="profile.php" method="post">
         <button  
           id='b'
-          type="submit">
+          type="button"
+          onclick="goToProfile()">
           Back
         </button>
         <!-- <input type="hidden" name="id" value="<?php print $id?>"> -->
@@ -61,6 +62,10 @@
 </form>
 
 <script>
+  function goToProfile(){
+    window.location.href = 'profile.php';
+    return false;
+  }
   function submitForm(){
     var file_data = $('#file').prop('files')[0];
     var form_data = new FormData();

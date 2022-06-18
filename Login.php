@@ -21,7 +21,13 @@
 
         <button type="submit">Login</button>
         
-        <button >Sign up?</button>
+        <button type="button" onclick="goToSignUp()">Sign up?</button>        
     </form>
+</body>
+<script>
+    function goToSignUp(){
+        window.location.href = 'signUP.php';
+    }
+</script>
 </body>
 </html>

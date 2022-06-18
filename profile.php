@@ -5,7 +5,7 @@
 include 'config.php';
 // temp code
 session_start(); 
-$_SESSION['id'] = 1;
+// $_SESSION['id'] = 1;
 $id = $_SESSION['id'];
 
 // $_SESSION['guest_id'] = "1";
@@ -14,8 +14,13 @@ $_SESSION['guest_id'] =  "-1";
 
 $sql = "SELECT * FROM weights WHERE user_id=$id ORDER BY id DESC LIMIT 1 ";
 $result = $db->query($sql);
-
-$weightRow = $result->fetch_assoc();
+if ($result->num_rows < 1) {
+  $weightRow = [
+    'weight' => 1
+  ];
+}else {
+  $weightRow = $result->fetch_assoc();
+}
 
 $sql = "SELECT * FROM users WHERE id=$id";
 $result = $db->query($sql);
@@ -67,13 +72,12 @@ $userRow = $result->fetch_assoc();
                 <button  
                   type="submit" 
                   style="border: 0; background: transparent">
-                  <img id="profile_pic" src="./ProfilePictures/<?php print $userRow['image']?>"/>
+                  <img id="profile_pic" src="<?php print $userRow['image']?>"/>
                 </button>
                 <!-- <input type="hidden" name="id" value="<?php print $userRow['id'] ?>"> -->
               </form>
                 <!-- <img src="Resources/profile_pic.png" id="profile_pic" onclick="goToLinkPage()" /> -->
               </div>
-
               <div class="col-sm-7">
                 <input class="profileInfo" 
                         value="<?php print $userRow['height']?> cm"
@@ -459,42 +463,50 @@ $userRow = $result->fetch_assoc();
     }
 
     function mouseOver(id){
-      let img = "Resources/close.png";
-      let imgID = "#img" + id.toString();
-      $(imgID).attr("src",img);
+      if($('#view').val() === "-1"){
+        let img = "Resources/close.png";
+        let imgID = "#img" + id.toString();
+        $(imgID).attr("src",img);
+      }
     }
 
     function mouseOut(id, img){
-      let imgID = "#img" + id.toString();
-      $(imgID).attr("src",img);
+      if($('#view').val() === "-1"){
+        let imgID = "#img" + id.toString();
+        $(imgID).attr("src",img);
+      }
     }
 
     function changeStatus(id){
-      var statusID = "#" + id.toString();
-      let color = $(statusID).css("background-color");
-      if(color === 'rgb(50, 205, 50)'){
-        $(statusID).css("background-color", "#FF0000");
-        updateStatusDB(0, id);
-      } else if (color === 'rgb(255, 0, 0)'){
-        $(statusID).css("background-color", "#FFFF00");
-        updateStatusDB(1, id);
-      } else {
-        $(statusID).css("background-color", "#32CD32");
-        updateStatusDB(2, id);
+      if($('#view').val() === "-1"){
+        var statusID = "#" + id.toString();
+        let color = $(statusID).css("background-color");
+        if(color === 'rgb(50, 205, 50)'){
+          $(statusID).css("background-color", "#FF0000");
+          updateStatusDB(0, id);
+        } else if (color === 'rgb(255, 0, 0)'){
+          $(statusID).css("background-color", "#FFFF00");
+          updateStatusDB(1, id);
+        } else {
+          $(statusID).css("background-color", "#32CD32");
+          updateStatusDB(2, id);
+        }
       }
     }
 
     function deleteExercise(id){
-      $.ajax({
-          type: "POST",
-          url: "db_manager.php",
-          data: {function: "deleteExercise", "id": id},
-          success: function(result){
-            // alert(result)
-            alert("Exercise has been deleted");
-            window.location.reload();
-          }
-      });
+      if($('#view').val() === "-1"){
+        $.ajax({
+            type: "POST",
+            url: "db_manager.php",
+            data: {function: "deleteExercise", "id": id},
+            success: function(result){
+              // alert(result)
+              alert("Exercise has been deleted");
+              window.location.reload();
+            }
+        });
+      }
     }
 
     var statusValues = {
@@ -504,17 +516,19 @@ $userRow = $result->fetch_assoc();
     };
 
     function updateStatusDB(value, id){
-      console.log(id)
-      $.ajax({
-          type: "POST",
-          url: "db_manager.php",
-          data: {function: "updateExercise", "id": id,
-                "value": statusValues[value]},
-          success: function(result){
-            // alert(result)
-            alert("Exercise has been updated");
-          }
-      });
+      if($('#view').val() === "-1"){
+        console.log(id)
+        $.ajax({
+            type: "POST",
+            url: "db_manager.php",
+            data: {function: "updateExercise", "id": id,
+                  "value": statusValues[value]},
+            success: function(result){
+              alert(result);
+              alert("Exercise has been updated");
+            }
+        });
+      }
     }
 
     function goToHistoryPage(){
@@ -587,6 +601,7 @@ $userRow = $result->fetch_assoc();
               url: "db_manager.php",
               data: dataString,
               success: function(result){
+                // alert(result);
                 alert("Exercises have been updated");
                 window.location.reload() 
               }
@@ -665,7 +680,8 @@ $userRow = $result->fetch_assoc();
       if($('#view').val() !== "-1"){
         alert("Implement going back to the user");
       } else {
-        alert("TODO: Implement log out after we have login");
+        window.location.href = 'logout.php';
+        return false;
       }
     }
   </script>

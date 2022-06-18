@@ -8,4 +8,9 @@
     if ($db->connect_error) {
         die("Connection failed: " . $db->connect_error);
     }
+
+    function generatePassword($pass){
+        $salt="IaiwajSTMfNqas72";
+        return md5(sha1($pass . $salt));
+    }
 ?>

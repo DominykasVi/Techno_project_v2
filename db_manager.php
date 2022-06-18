@@ -5,6 +5,7 @@ print_r($_REQUEST);
 session_start(); 
 
 
+
 switch ($_REQUEST["function"]){
     case "insertExercise":
         insertExercise($db);
@@ -97,7 +98,6 @@ function insertExercise($db){
         $location=mysqli_real_escape_string($db, $_REQUEST['location']);
     } else {
         echo "location not set;";
-
         $location=" ";
     }
     if($_REQUEST['people'] != ""){
