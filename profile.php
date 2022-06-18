@@ -8,7 +8,7 @@ session_start();
 $_SESSION['id'] = 1;
 $id = $_SESSION['id'];
 
-// $_SESSION['guest_id'] = "2";
+// $_SESSION['guest_id'] = "1";
 $_SESSION['guest_id'] =  "-1";
 
 
@@ -306,7 +306,6 @@ $userRow = $result->fetch_assoc();
                 <div
                   class="row align-items-center my-0"
                 >
-                  <!-- TODO: cahnge to shape with color property, js or php? -->
                   <?php
                   $sql = "SELECT * FROM exercises";
                   $exerciseResults = $db->query($sql);
@@ -331,7 +330,7 @@ $userRow = $result->fetch_assoc();
                       printName($exerciseDict[$row['exercise_id']][0]);
                       printGeneral($row['location']);
                       printGeneral($row['people']);
-                      printStatus($row['status']);
+                      printStatus($row['status'], $row['id']);
                     }
                   } else {
                     echo "0 results";
@@ -363,7 +362,7 @@ $userRow = $result->fetch_assoc();
                     echo '</div>';
                   }
                   
-                  function printStatus($status){
+                  function printStatus($status, $id){
                     $statusDict = [
                       "Not completed" => "#ff0000",
                       "In progress" => "#ffff00",
@@ -372,6 +371,12 @@ $userRow = $result->fetch_assoc();
 
                     echo '<div class="col-sm-1">';
                     echo '<div class="status"';
+                    echo ' onclick="changeStatus(';
+                    echo $id;
+                    echo ')"';
+                    echo ' id="';
+                    echo $id;
+                    echo '" ';
                     echo 'style="background-color:';
                     echo $statusDict[$status];
                     echo '"';
@@ -435,6 +440,41 @@ $userRow = $result->fetch_assoc();
         $('#profileTop').css("border-right", "0px solid #3581b8");
         $('#profileSocial').css("border-right", "0px solid #3581b8");
       }
+    }
+
+    function changeStatus(id){
+      var statusID = "#" + id.toString();
+      let color = $(statusID).css("background-color");
+      if(color === 'rgb(50, 205, 50)'){
+        $(statusID).css("background-color", "#FF0000");
+        updateStatusDB(0, id);
+      } else if (color === 'rgb(255, 0, 0)'){
+        $(statusID).css("background-color", "#FFFF00");
+        updateStatusDB(1, id);
+      } else {
+        $(statusID).css("background-color", "#32CD32");
+        updateStatusDB(2, id);
+      }
+    }
+
+    var statusValues = {
+      0: "Not completed",
+      1: "In progress",
+      2: "Done"
+    };
+
+    function updateStatusDB(value, id){
+      console.log(id)
+      $.ajax({
+          type: "POST",
+          url: "db_manager.php",
+          data: {function: "updateExercise", "id": id,
+                "value": statusValues[value]},
+          success: function(result){
+            alert(result)
+            // alert("Exercise has been updated");
+          }
+      });
     }
 
     function goToHistoryPage(){

@@ -5,7 +5,7 @@ session_start();
 $_SESSION['id'] = 1;
 $id = $_SESSION['id'];
 
- $_SESSION['guest_id'] = -1
+//  $_SESSION['guest_id'] = -1
 ?>
 
 

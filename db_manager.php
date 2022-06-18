@@ -18,6 +18,23 @@ switch ($_REQUEST["function"]){
     case "copy":
         copyExercises($db);
         break;
+    case "updateExercise":
+        updateExercise($db);
+        break;
+}
+
+function updateExercise($db){
+    
+    $status = mysqli_real_escape_string($db, $_REQUEST['value']);
+    $id = mysqli_real_escape_string($db, $_REQUEST['id']);
+    $date = date('Y-m-d');
+    $sql = "UPDATE history SET status = '$status', date='$date'  WHERE id = $id";
+    echo $sql;
+    if ($db->query($sql) === TRUE) {
+        echo "Success";
+    } else {
+        echo "Error: " . $sql . "<br>" . $db->error;
+    }
 }
 
 function copyExercises($db){
@@ -35,8 +52,9 @@ function copyExercises($db){
         $location = $row['location'];
         $people = $row['people'];
         $status = $row['status'];
-        $sql = "INSERT INTO history (user_id, exercise_id, location, people, status)
-            VALUES ($id, $exercise_id, '$location', $people, '$status')";
+        $date = date('Y-m-d');
+        $sql = "INSERT INTO history (user_id, exercise_id, location, people, status, date)
+            VALUES ($id, $exercise_id, '$location', $people, '$status', '$date')";
         if ($db->query($sql) === TRUE) {
             echo "Success";
         } else {
@@ -77,9 +95,9 @@ function insertExercise($db){
     }
 
    
-
-    $sql = "INSERT INTO history (user_id, exercise_id, location, people, status)
-    VALUES ($id, $exercise, '$location', $people, '$status')";
+    $date = date('Y-m-d');
+    $sql = "INSERT INTO history (user_id, exercise_id, location, people, status, date)
+    VALUES ($id, $exercise, '$location', $people, '$status', '$date')";
 
     echo $sql;
     if ($db->query($sql) === TRUE) {

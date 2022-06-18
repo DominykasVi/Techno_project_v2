@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 13, 2022 at 08:25 PM
+-- Generation Time: Jun 18, 2022 at 09:43 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.5
 
@@ -39,7 +39,11 @@ CREATE TABLE `exercises` (
 
 INSERT INTO `exercises` (`id`, `name`, `image_link`) VALUES
 (1, 'Bench Press', 'https://cdn-icons-png.flaticon.com/512/2548/2548440.png'),
-(2, 'Squat', 'https://cdn-icons-png.flaticon.com/512/3043/3043290.png');
+(2, 'Squat', 'https://cdn-icons-png.flaticon.com/512/3043/3043290.png'),
+(3, 'Push ups', 'https://cdn-icons-png.flaticon.com/512/5147/5147050.png'),
+(4, 'Pull ups', 'https://cdn-icons-png.flaticon.com/512/5147/5147107.png'),
+(5, 'Dumbbell curls', 'https://cdn-icons-png.flaticon.com/512/1545/1545440.png'),
+(6, 'Sit ups', 'https://cdn-icons-png.flaticon.com/512/5147/5147183.png');
 
 -- --------------------------------------------------------
 
@@ -53,22 +57,38 @@ CREATE TABLE `history` (
   `exercise_id` int(11) NOT NULL,
   `location` varchar(30) NOT NULL,
   `people` int(5) NOT NULL,
-  `status` varchar(20) NOT NULL
+  `status` varchar(20) NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `history`
 --
 
-INSERT INTO `history` (`id`, `user_id`, `exercise_id`, `location`, `people`, `status`) VALUES
-(2, 1, 1, '', 1, 'In progress'),
-(3, 1, 1, '', 1, 'In progress'),
-(4, 1, 1, '', 1, 'In progress'),
-(7, 1, 1, 'home', 1, 'In progress'),
-(8, 1, 1, ' ', 1, 'In progress'),
-(9, 1, 1, 'home', 3, 'In progress'),
-(10, 1, 2, 'Outside', 3, 'Done'),
-(11, 1, 2, 'Home', 1, 'Done');
+INSERT INTO `history` (`id`, `user_id`, `exercise_id`, `location`, `people`, `status`, `date`) VALUES
+(2, 1, 1, '', 1, 'Done', '0000-00-00'),
+(3, 1, 1, '', 1, 'In progress', '0000-00-00'),
+(4, 1, 1, '', 1, 'In progress', '0000-00-00'),
+(7, 1, 1, 'home', 1, 'In progress', '0000-00-00'),
+(8, 1, 1, ' ', 1, 'In progress', '0000-00-00'),
+(9, 1, 1, 'home', 3, 'In progress', '0000-00-00'),
+(10, 1, 2, 'Outside', 3, 'Done', '0000-00-00'),
+(11, 1, 2, 'Home', 1, 'Done', '0000-00-00'),
+(12, 1, 3, ' ', 1, 'Done', '0000-00-00'),
+(13, 1, 3, ' ', 1, 'Not completed', '0000-00-00'),
+(14, 1, 6, ' ', 1, 'Done', '0000-00-00'),
+(15, 1, 3, ' ', 1, 'Done', '0000-00-00'),
+(16, 1, 3, ' ', 1, 'Done', '0000-00-00'),
+(17, 1, 4, ' ', 1, 'Not completed', '0000-00-00'),
+(18, 1, 5, ' ', 1, 'Done', '0000-00-00'),
+(19, 1, 6, ' ', 1, 'Not completed', '0000-00-00'),
+(20, 2, 4, ' ', 1, 'Not completed', '0000-00-00'),
+(21, 2, 6, ' ', 1, 'In progress', '0000-00-00'),
+(22, 2, 6, ' ', 1, 'In progress', '0000-00-00'),
+(23, 2, 4, ' ', 1, 'Not completed', '0000-00-00'),
+(24, 1, 4, ' ', 1, 'Done', '2022-06-18'),
+(25, 1, 4, ' ', 1, 'Done', '2022-06-18'),
+(26, 1, 6, ' ', 1, 'In progress', '2022-06-18');
 
 -- --------------------------------------------------------
 
@@ -89,7 +109,8 @@ CREATE TABLE `relationships` (
 INSERT INTO `relationships` (`id`, `follower`, `following`) VALUES
 (1, 4, 1),
 (2, 2, 1),
-(3, 3, 1);
+(3, 3, 1),
+(4, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -113,7 +134,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `custom_id`, `image`, `height`) VALUES
-(1, 'user', 'user', 'user', 'pass', 'user#1', '', 181.3),
+(1, 'user', 'user', 'user', 'pass', 'user#1', 'profile_pic.png', 181.5),
 (2, 'cutie', 'cuteAlien', 'cutie', 'cutie', '', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWb8K3oCadfjT91q1nyuzUHR4QjzVQYIDTvw&usqp=CAU', 60),
 (3, 'yoda', 'babyYoda', 'yoda', 'yoda', '', 'https://media.vanityfair.com/photos/5eb06b3ec135d48f5b12097d/4:3/w_1116,h_837,c_limit/baby-yoda-craze.jpg', 120),
 (4, 'cuteBot', 'Bot', 'bot', 'bot', '', 'https://cellularnews.com/wp-content/uploads/2020/05/58-star-wars-a-cute-bb-8-artwork-325x485.jpg', 90);
@@ -145,7 +166,9 @@ INSERT INTO `weights` (`id`, `user_id`, `weight`, `date`) VALUES
 (7, 1, 22, '2022-06-13'),
 (8, 1, 12, '2022-06-13'),
 (9, 1, 22, '2022-06-13'),
-(10, 1, 85, '2022-06-13');
+(10, 1, 85, '2022-06-13'),
+(11, 1, 87, '2022-06-16'),
+(12, 2, 30, '2022-06-01');
 
 --
 -- Indexes for dumped tables
@@ -193,19 +216,19 @@ ALTER TABLE `weights`
 -- AUTO_INCREMENT for table `exercises`
 --
 ALTER TABLE `exercises`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `relationships`
 --
 ALTER TABLE `relationships`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -217,7 +240,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `weights`
 --
 ALTER TABLE `weights`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
