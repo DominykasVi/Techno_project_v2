@@ -74,7 +74,7 @@ $id = $_SESSION['id'];
             if ($historyResults->num_rows > 0) {
               // output data of each row
               while ($row = $historyResults->fetch_assoc()) {
-                printImage($exerciseDict[$row['exercise_id']][1]);
+                printImage($exerciseDict[$row['exercise_id']][1], $row['id']);
                 printName($exerciseDict[$row['exercise_id']][0]);
                 printStatus($row['status'], $row['id']);
               }
@@ -83,12 +83,30 @@ $id = $_SESSION['id'];
             }
             //$db->close();
 
-            function printImage($img)
-            {
+            function printImage($img, $id){
               echo '<div class="col-sm-2 w-90">';
-              echo '<img id="exerciseImage" src="';
+              echo '<img class="exerciseImage" src="';
               echo $img;
-              echo '"></img>';
+              echo '"';
+
+              echo ' id="img';
+              echo $id;
+              echo '" ';
+
+              echo 'onmouseover="mouseOver(';
+              echo $id;
+              echo ')" onmouseout="mouseOut(';
+              echo $id;
+              echo ", '";
+              echo $img;
+              echo "'";
+              echo ')"';
+
+              echo 'onclick="deleteExercise(';
+              echo $id;
+              echo ')"';
+
+              echo '></img>';
               echo '</div>';
             }
 
@@ -478,8 +496,8 @@ $id = $_SESSION['id'];
     var exercisesToCopy = []
 
     function copyExercise(id) {
+      var selectorID = "#" + id.toString();
       if ($('#view').val() !== "-1") {
-        var selectorID = "#" + id.toString();
         // console.log(id);
         if ($(selectorID).css("background-color") === 'rgb(50, 205, 50)') {
           $(selectorID).css("background-color", "white");
@@ -491,10 +509,39 @@ $id = $_SESSION['id'];
           $(selectorID).css("background-color", "#32cd32");
           exercisesToCopy.push(id);
         }
-        // console.log(selectorID);
-        // console.log($(selectorID).css("background-color"))
-        // console.log(exercisesToCopy)
+      } else {
+        let color = $(selectorID).css("background-color");
+        if(color === 'rgb(50, 205, 50)'){
+          $(selectorID).css("background-color", "#FF0000");
+          updateStatusDB(0, id);
+        } else if (color === 'rgb(255, 0, 0)'){
+          $(selectorID).css("background-color", "#FFFF00");
+          updateStatusDB(1, id);
+        } else {
+          $(selectorID).css("background-color", "#32CD32");
+          updateStatusDB(2, id);
+        }
       }
+    }
+
+    var statusValues = {
+      0: "Not completed",
+      1: "In progress",
+      2: "Done"
+    };
+
+    function updateStatusDB(value, id){
+      console.log(id)
+      $.ajax({
+          type: "POST",
+          url: "db_manager.php",
+          data: {function: "updateExercise", "id": id,
+                "value": statusValues[value]},
+          success: function(result){
+            // alert(result)
+            alert("Exercise has been updated");
+          }
+      });
     }
 
     function copyExercises() {
@@ -590,6 +637,36 @@ $id = $_SESSION['id'];
         }
       );
     });
+
+    function mouseOver(id){
+      if ($('#view').val() === "-1") {
+        let img = "Resources/close.png";
+        let imgID = "#img" + id.toString();
+        $(imgID).attr("src",img);
+      }
+    }
+
+    function mouseOut(id, img){
+      if ($('#view').val() === "-1") {
+        let imgID = "#img" + id.toString();
+        $(imgID).attr("src",img);
+      }
+    }
+
+    function deleteExercise(id){
+      if ($('#view').val() === "-1") {
+        $.ajax({
+            type: "POST",
+            url: "db_manager.php",
+            data: {function: "deleteExercise", "id": id},
+            success: function(result){
+              // alert(result)
+              alert("Exercise has been deleted");
+              window.location.reload();
+            }
+        });
+      }
+    }
   </script>
 </body>
 

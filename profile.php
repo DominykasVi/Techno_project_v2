@@ -362,7 +362,6 @@ $userRow = $result->fetch_assoc();
 
                     echo '></img>';
                     echo '</div>';
-
                   }
 
                   function printName($name){
@@ -423,17 +422,15 @@ $userRow = $result->fetch_assoc();
             </div>
           </div>
           <div class="text-center">
-            <form action="History.php" method="post">
               <button 
-                type="submit" 
-                id="historyButton" 
+                type="button" 
+                id="historyButton"
+                onclick="goToHistoryPage()"
                 >
                 See history
               </button>
-              <input type="hidden" name="id" value="<?php print $userRow['id'];?>">
             
 
-            </form>
           </div>
         </div>
       </div>

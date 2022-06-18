@@ -21,7 +21,7 @@ h2 {
   text-align: center;
   border: 1px solid #f3f8f2;
 }
-#exerciseImage {
+.exerciseImage {
   width: 70%;
   height: auto;
   border-radius: 50%;
@@ -45,7 +45,7 @@ h2 {
   color: #758ecd;
   height: 40px;
 }
-#profileText{
+#profileText {
   font-weight: bold;
 }
 .mainHeading {
@@ -66,7 +66,7 @@ h2 {
   font-size: 22px;
   padding: 3px;
 }
-.weightInfo{
+.weightInfo {
   margin-top: 15px;
   text-align: center;
   color: #707070;
