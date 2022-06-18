@@ -15,8 +15,9 @@
       include 'config.php';
 
       // print_r($_REQUEST);
+      session_start(); 
 
-      $id = $_REQUEST['id'];
+      $id = $_SESSION['id'];
       $sql = "SELECT custom_id FROM users WHERE id=$id";
       $result = $db->query($sql);
       // print_r($result);
@@ -42,7 +43,7 @@
           type="submit">
           Back
         </button>
-        <input type="hidden" name="id" value="<?php print $id?>">
+        <!-- <input type="hidden" name="id" value="<?php print $id?>"> -->
       </form>
 
       <!-- <form action="upload.php" method="post" enctype="multipart/form-data">

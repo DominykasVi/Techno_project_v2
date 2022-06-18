@@ -5,17 +5,6 @@ session_start();
 $_SESSION['id'] = 1;
 $id = $_SESSION['id'];
 
-
-$sql = "SELECT * FROM weights WHERE user_id=$id ORDER BY id DESC LIMIT 1 ";
-$result = $db->query($sql);
-
-$weightRow = $result->fetch_assoc();
-
-$sql = "SELECT * FROM users WHERE id=$id";
-$result = $db->query($sql);
-$userRow = $result->fetch_assoc();
-
-// echo $_REQUEST['guest_id'];
 ?>
 
 
@@ -33,7 +22,7 @@ $userRow = $result->fetch_assoc();
 </head>
 
 <body>
-  <input type="hidden" id="view" value="<?php print $_REQUEST['guest_id'] ?>">
+  <input type="hidden" id="view" value="<?php print $_SESSION['guest_id'] ?>">
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -71,7 +60,7 @@ $userRow = $result->fetch_assoc();
             <?php
             $sql = "SELECT * FROM exercises";
             $exerciseResults = $db->query($sql);
-            $exerciseDict = [];
+            $exerciseDict = []; 
             if ($exerciseResults->num_rows > 0) {
               // output data of each row
               while ($row = $exerciseResults->fetch_assoc()) {
@@ -80,7 +69,7 @@ $userRow = $result->fetch_assoc();
             }
 
             $sql = "SELECT id, exercise_id, location, people, status FROM
-                            history WHERE user_id=$id ORDER BY id DESC LIMIT 6";
+                            history WHERE user_id=$id ORDER BY id DESC";
             $historyResults = $db->query($sql);
             if ($historyResults->num_rows > 0) {
               // output data of each row

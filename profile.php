@@ -5,11 +5,11 @@
 include 'config.php';
 // temp code
 session_start(); 
-$_SESSION['id'] = 2;
+$_SESSION['id'] = 1;
 $id = $_SESSION['id'];
 
-// $_REQUEST['guest_id'] = "2";
-$_REQUEST['guest_id'] = "-1";
+// $_SESSION['guest_id'] = "2";
+$_SESSION['guest_id'] =  "-1";
 
 
 $sql = "SELECT * FROM weights WHERE user_id=$id ORDER BY id DESC LIMIT 1 ";
@@ -56,7 +56,7 @@ $userRow = $result->fetch_assoc();
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <input type="hidden" id="view" value="<?php print $_REQUEST['guest_id'] ?>">
+    <input type="hidden" id="view" value="<?php print $_SESSION['guest_id'] ?>">
     <div class="container-fluid h-100">
       <div class="row h-100">
         <div class="col-xl-5 h-100" id="left">
@@ -69,7 +69,7 @@ $userRow = $result->fetch_assoc();
                   style="border: 0; background: transparent">
                   <img id="profile_pic" src="./ProfilePictures/<?php print $userRow['image']?>"/>
                 </button>
-                <input type="hidden" name="id" value="<?php print $userRow['id'] ?>">
+                <!-- <input type="hidden" name="id" value="<?php print $userRow['id'] ?>"> -->
               </form>
                 <!-- <img src="Resources/profile_pic.png" id="profile_pic" onclick="goToLinkPage()" /> -->
               </div>
@@ -407,7 +407,7 @@ $userRow = $result->fetch_assoc();
                 See history
               </button>
               <input type="hidden" name="id" value="<?php print $userRow['id'];?>">
-              <input type="hidden" name="guest_id" value="<?php print $_REQUEST['guest_id'];?>">
+            
 
             </form>
           </div>
