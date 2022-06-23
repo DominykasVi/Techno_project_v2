@@ -5,10 +5,10 @@
 include 'config.php';
 // temp code
 session_start(); 
-// $_SESSION['id'] = 1;
+// $_SESSION['id'] = 8;
 $id = $_SESSION['id'];
 
-// $_SESSION['guest_id'] = "1";
+// $_SESSION['guest_id'] = "3";
 $_SESSION['guest_id'] =  "-1";
 
 

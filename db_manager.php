@@ -25,7 +25,22 @@ switch ($_REQUEST["function"]){
     case "deleteExercise":
         deleteExercise($db);
         break;
+    case "updateImage":
+        updateImage($db);
+        break;
+        
 }
+
+function updateImage($db) {
+    $img = mysqli_real_escape_string($db, $_REQUEST['img']);
+    $id = $_SESSION['id'];
+    $sql = "UPDATE users SET image='$img' WHERE id =$id ; ";
+    if ($db->query($sql) === TRUE) {
+        echo "Success";
+    } else {
+        echo "Error: " . $sql . "<br>" . $db->error;
+    }
+};
 
 function deleteExercise($db){
     $id = mysqli_real_escape_string($db, $_REQUEST['id']);
@@ -53,7 +68,7 @@ function updateExercise($db){
 
 function copyExercises($db){
     $data = json_decode(stripslashes($_POST['data']));
-
+    $id = $_SESSION['guest_id'];
     foreach($data as $exercise){
         // echo $exercise;
 
@@ -61,7 +76,7 @@ function copyExercises($db){
         $result = $db->query($sql);
         $row = $result->fetch_assoc();
 
-        $id = $_REQUEST['guest_id'];
+        
         $exercise_id = $row['exercise_id'];
         $location = $row['location'];
         $people = $row['people'];
@@ -75,6 +90,27 @@ function copyExercises($db){
             echo "Error: " . $sql . "<br>" . $db->error;
         }
      }
+
+    // $sql = "SELECT username, email, custom_id from users WHERE id=$id";
+    // $result = $db->query($sql);
+    // $row = $result->fetch_assoc();
+
+    // // $email = $row['email'];
+    // $email = 'dominykas.vi@gmail.com';
+    //     $username = $row['username'];
+    // $custom_id = $row['custom_id'];
+    // // the message
+    // $msg = "The user :". $username . "(" . $custom_id . ") has copied your exercises" . $row['email'];
+
+    // // use wordwrap() if lines are longer than 70 characters
+    // $msg = wordwrap($msg,70);
+
+    // // send email
+    // if (mail($email,"Exercises copied",$msg) == TRUE){
+    //     echo "email sent";
+    // }else {
+    //     echo "could not send email";
+    // };
 }
 
 function insertExercise($db){

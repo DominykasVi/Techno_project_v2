@@ -1,3 +1,6 @@
+<?php     
+include 'config.php';
+session_start();?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,13 +12,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
+  <input type="hidden" id="view" value="<?php print $_SESSION['guest_id'] ?>">
+
     <div id="main">
       <h1>Your Link</h1>
       <?php 
-      include 'config.php';
-
-      // print_r($_REQUEST);
-      session_start(); 
+  
 
       $id = $_SESSION['id'];
       $sql = "SELECT custom_id FROM users WHERE id=$id";
@@ -52,10 +54,7 @@
         <input type="file" name="fileToUpload" id="fileToUpload">
         <input type="submit" value="Upload Image" name="submit">
       </form> -->
-      <form action="upload.php" method="post" enctype="multipart/form-data">
-        <input type="file" id="file" name="filename" onchange="submitForm();">
-        <input type="hidden" name="id" id="imageUploadID" value="<?php print $row['custom_id']?>">
-      </form>
+      <input id="imgInput" onchange="submitForm()" type="text"></input>
     </div>
   </body>
 </html>
@@ -67,28 +66,25 @@
     return false;
   }
   function submitForm(){
-    var file_data = $('#file').prop('files')[0];
-    var form_data = new FormData();
-    form_data.append('file', file_data);
-    var id = $("#imageUploadID").val();
-    form_data.append('id', id);
-    $.ajax({
-        url: 'upload.php',
-        dataType: 'text', // what to expect back from the server
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: form_data,
-        type: 'post',
-        success: function (response) {
-            alert(response)
-
-            // $('#msg').html(response); // display success response from the server
-        },
-        error: function (response) {
-            // $('#msg').html(response); // display error response from the server
+    console.log($('#view').val())
+    if($('#view').val() === "-1"){
+        var img = $('#imgInput').val();
+        // console.log(parseFloat(height))
+        if(img !=='' || img!=null)
+        {
+            // Ajax code to submit form.
+            $.ajax({
+                type: "POST",
+                url: "db_manager.php",
+                data: {'function': 'updateImage','img': img},
+                success: function(result){
+                    alert(result)
+                    alert("Your image has been updated");
+                }
+            });
         }
-    });
+        return false;
+      }
   }
 </script>
 
