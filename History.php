@@ -23,7 +23,7 @@ $id = $_SESSION['id'];
 </head>
 
 <body>
-  <input type="hidden" id="view" value="<?php print $_SESSION['guest_id'] ?>">
+  <input type="hidden" id="view" value=" <?php print $_SESSION['guest_id'] ?>">
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -243,38 +243,43 @@ $id = $_SESSION['id'];
           echo "0 results";
         }
 
-        // $sql = "SELECT * FROM exercises WHERE user_id=$id ORDER BY date ACS";
+        // $sql = "SELECT * FROM history WHERE user_id=$id ORDER BY date ACS";
         // $weightResults = $db->query($sql);
         // if ($weightResults->num_rows > 0) {
         // // output data of each row
         // $lineDataPoints = array();
         //   while ($row = $weightResults->fetch_assoc()) {
-        //     array_push($lineDataPoints, array("y" => $row['weight'],"label" => $row['date']));
+        //     array_push($lineDataPoints, array("x" => $row['date'],"y" => $row['date']));
         //   }
         // } else {
         //   echo "0 results";
         // }
+        $sql = "SELECT * from history WHERE user_id=$id";
+        if ($result = mysqli_query($db, $sql)) {
+           $total = mysqli_num_rows( $result );
+        }
+
+        $sql = "SELECT * FROM exercises";
+            $exerciseResults = $db->query($sql);
+            $exerciseDict = []; 
+            if ($exerciseResults->num_rows > 0) {
+              while ($row = $exerciseResults->fetch_assoc()) {
+                $exerciseDict[$row['id']] = [$row['name'], $row['image_link']];
+              }
+            }
+
+        $sql = "SELECT date, COUNT(*) as count from history WHERE user_id=$id GROUP BY date";
+        $result = $db->query($sql);
+          if ($result->num_rows > 0) {
+            $lineDataPoints = array();
+            while ($row = $result->fetch_assoc()) {
+              array_push($lineDataPoints, array("label" => $row['date'], "y" => $row['count']));
+            }
+          } else {
+            echo "0 results";
+          }
 
 
-        $lineDataPoints = array(
-          array("x" => 946665000000, "y" => 3289000),
-          array("x" => 978287400000, "y" => 3830000),
-          array("x" => 1009823400000, "y" => 2009000),
-          array("x" => 1041359400000, "y" => 2840000),
-          array("x" => 1072895400000, "y" => 2396000),
-          array("x" => 1104517800000, "y" => 1613000),
-          array("x" => 1136053800000, "y" => 1821000),
-          array("x" => 1167589800000, "y" => 2000000),
-          array("x" => 1199125800000, "y" => 1397000),
-          array("x" => 1230748200000, "y" => 2506000),
-          array("x" => 1262284200000, "y" => 6704000),
-          array("x" => 1293820200000, "y" => 5704000),
-          array("x" => 1325356200000, "y" => 4009000),
-          array("x" => 1356978600000, "y" => 3026000),
-          array("x" => 1388514600000, "y" => 2394000),
-          array("x" => 1420050600000, "y" => 1872000),
-          array("x" => 1451586600000, "y" => 2140000)
-        );
 
         $sql = "SELECT * from history WHERE user_id=$id";
         if ($result = mysqli_query($db, $sql)) {
@@ -382,29 +387,22 @@ $id = $_SESSION['id'];
           });
           chart.render();
 
-          var chart5 = new CanvasJS.Chart("lineChartExercises", {
-            animationEnabled: true,
+
+          var chart = new CanvasJS.Chart("lineChartExercises", {
             backgroundColor: "#dee2d6",
             title: {
-              text: "Company Revenue by Year"
+              text: "Number of exercises in each date"
             },
             axisY: {
-              title: "Revenue in USD",
-              valueFormatString: "#0,,.",
-              suffix: "mn",
-              prefix: "$"
+              title: "Number of exercises"
             },
             data: [{
-              type: "spline",
-              markerSize: 5,
-              xValueFormatString: "YYYY",
-              yValueFormatString: "$#,##0.##",
-              xValueType: "dateTime",
+              type: "line",
               dataPoints: <?php echo json_encode($lineDataPoints, JSON_NUMERIC_CHECK); ?>
             }]
           });
-
-          chart5.render();
+          chart.render();
+          
         }
       </script>
 
