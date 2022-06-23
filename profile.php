@@ -5,11 +5,12 @@
 include 'config.php';
 // temp code
 session_start(); 
-// $_SESSION['id'] = 8;
+// $_SESSION['id'] = 14;
 $id = $_SESSION['id'];
+// echo $_SESSION['guest_id'];
 
 // $_SESSION['guest_id'] = "3";
-$_SESSION['guest_id'] =  "-1";
+// $_SESSION['guest_id'] =  "-1";
 
 
 $sql = "SELECT * FROM weights WHERE user_id=$id ORDER BY id DESC LIMIT 1 ";
@@ -524,7 +525,7 @@ $userRow = $result->fetch_assoc();
             data: {function: "updateExercise", "id": id,
                   "value": statusValues[value]},
             success: function(result){
-              alert(result);
+              // alert(result);
               alert("Exercise has been updated");
             }
         });
@@ -541,7 +542,7 @@ $userRow = $result->fetch_assoc();
     }
 
     function goToFollowPage(){
-      window.location.href = 'follow.html';
+      window.location.href = 'followPage.php';
       return false;
     };
 
@@ -678,7 +679,17 @@ $userRow = $result->fetch_assoc();
     }
     function LogOut(){
       if($('#view').val() !== "-1"){
-        alert("Implement going back to the user");
+        console.log("here");
+        $.ajax({
+            type: "POST",
+            url: "sessionManager.php",
+            data: {'back': "set"},
+            success: function(result){
+              // alert(result);
+              window.location.href = 'profile.php';
+
+            }
+        });
       } else {
         window.location.href = 'logout.php';
         return false;

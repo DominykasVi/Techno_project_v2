@@ -21,10 +21,19 @@ h2 {
   width: 1280px;
 }
 #b {
-  font-size: 45px;
-  padding: 0;
+  background: #758ecd;
+  color: #f3f8f2;
   border: none;
-  background: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 25px;
+  width: 20%;
+  height: 40px;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+
+  font-size: 25px;
 }
 #imgInput {
   border-radius: 25px;
@@ -35,5 +44,5 @@ h2 {
   text-align: center;
   color: #758ecd;
   background-color: white;
-  margin-top: 5%;
+  margin-top: 2%;
 }

@@ -1,9 +1,8 @@
 <?php
 include 'config.php';
 // Check connection
-print_r($_REQUEST);
+// print_r($_REQUEST);
 session_start(); 
-
 
 
 switch ($_REQUEST["function"]){
@@ -28,7 +27,41 @@ switch ($_REQUEST["function"]){
     case "updateImage":
         updateImage($db);
         break;
+    case "followUser":
+        followUser($db);
+        break;
         
+}
+
+function followUser($db){
+    $tag = mysqli_real_escape_string($db, $_REQUEST['tag']);
+    $sql = "SELECT id FROM users WHERE custom_id='$tag'";
+    $result = $db->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $id = $_SESSION['id'];
+        $following = $row['id'];
+        
+        $sql = "SELECT following FROM relationships WHERE follower='$id'";
+        $result = $db->query($sql);
+        while($row = $result->fetch_assoc()){
+            $followID = $row['following'];
+            if($followID == $following){
+                echo "Already following user";
+                return;
+            };
+        }
+
+        $sql = "INSERT INTO relationships (follower, following) 
+        VALUES ($id, $following);";
+        if ($db->query($sql) === TRUE) {
+            echo "User followed";
+        } else {
+            echo "Error: " . $sql . "<br>" . $db->error;
+        }
+    } else {
+        echo "no such user";
+    };
 }
 
 function updateImage($db) {
@@ -36,7 +69,7 @@ function updateImage($db) {
     $id = $_SESSION['id'];
     $sql = "UPDATE users SET image='$img' WHERE id =$id ; ";
     if ($db->query($sql) === TRUE) {
-        echo "Success";
+        echo "Image updated";
     } else {
         echo "Error: " . $sql . "<br>" . $db->error;
     }
@@ -85,7 +118,7 @@ function copyExercises($db){
         $sql = "INSERT INTO history (user_id, exercise_id, location, people, status, date)
             VALUES ($id, $exercise_id, '$location', $people, '$status', '$date')";
         if ($db->query($sql) === TRUE) {
-            echo "Success";
+            echo "Exercises copied";
         } else {
             echo "Error: " . $sql . "<br>" . $db->error;
         }

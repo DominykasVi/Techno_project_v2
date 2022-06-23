@@ -1,0 +1,46 @@
+body {
+  font-family: "Times New Roman", Times, serif;
+  background-color: #3581b8;
+  overflow: hidden;
+}
+.main {
+  width: 100%;
+  height: auto;
+  /* z-index: 2; */
+}
+.container {
+  position: relative;
+  width: 100%;
+}
+
+/* Make the image responsive */
+.container img {
+  width: 100%;
+  height: auto;
+}
+
+/* Style the button and place it in the middle of the container/image */
+#logIN {
+  top: 50%;
+}
+#signUP {
+  top: 60%;
+}
+.container .btn {
+  position: absolute;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background: #758ecd;
+  color: #f3f8f2;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 10%;
+}
+
+.container .btn:hover {
+  background-color: black;
+}

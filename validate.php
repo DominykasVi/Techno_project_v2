@@ -20,15 +20,15 @@ include "config.php";
          print($pass);
          $sql= "select * from users where email='$email' and password='$pass'"; 
          $result = mysqli_query($db, $sql);
-    if(mysqli_num_rows($result)===1){
-        $row = mysqli_fetch_assoc($result);
+         if(mysqli_num_rows($result)===1){
+            $row = mysqli_fetch_assoc($result);
 
-        if ($row['email']===$email && $row['password']===$pass) {
-            session_start();
-            $_SESSION['id'] = $row['id'];
-            $_SESSION['guest)id'] = -1;
-            header("Location:profile.php");
-        }
+            if ($row['email']===$email && $row['password']===$pass) {
+                session_start();
+                $_SESSION['id'] = $row['id'];
+                $_SESSION['guest_id'] = -1;
+                header("Location:profile.php");
+            }
     }else{
         // print($pass) ;
         header("Location:Login.php?error=Incorrect Email or Password");

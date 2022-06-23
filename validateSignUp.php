@@ -60,10 +60,11 @@
             $custom_id = $username . "#". $num;
         };
 
-        $sql= "SELECT email FROM users WHERE username='$email'";
+        $sql= "SELECT email FROM users WHERE email='$email'";
 
         $result = $db->query($sql);
-        if ($result->num_rows > 1) {
+        // echo $result->num_rows;
+        if ($result->num_rows > 0) {
             header("Location:signUP.php?error=Email already in use");
             exit();
         }
@@ -88,6 +89,8 @@
             $last_id = $db->insert_id;
             $_SESSION['id'] = $last_id;
             $_SESSION['guest)id'] = -1;
+            echo  $_SESSION['id'] = $last_id;
+            echo $_SESSION['guest_id'] = -1;
             header("Location: profile.php");   
         } else {
             echo "Error: " . $db->error;

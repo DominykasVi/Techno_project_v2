@@ -54,7 +54,8 @@ session_start();?>
         <input type="file" name="fileToUpload" id="fileToUpload">
         <input type="submit" value="Upload Image" name="submit">
       </form> -->
-      <input id="imgInput" onchange="submitForm()" type="text"></input>
+      <h2>Change your image:</h2>
+      <input id="imgInput" onchange="submitForm()" type="text" placeholder="Image Link"></input>
     </div>
   </body>
 </html>

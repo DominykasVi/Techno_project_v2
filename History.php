@@ -4,8 +4,8 @@ include 'config.php';
 session_start();
 // $_SESSION['id'] = 1;
 $id = $_SESSION['id'];
-
-//  $_SESSION['guest_id'] = -1
+// echo $_SESSION['guest_id'];
+//  $_SESSION['guest_id'] = -1;
 ?>
 
 
@@ -315,7 +315,9 @@ $id = $_SESSION['id'];
         window.onload = function() {
 
           function setVisibility() {
-            if ($('#view').val() !== "-1") {
+            console.log($('#view').val());
+            console.log($('#view').val() != -1);
+            if ($('#view').val() != -1) {
               $('#statusText').text("Copy");
               $('.status').css("background-color", "white");
             } else {
@@ -495,7 +497,7 @@ $id = $_SESSION['id'];
 
     function copyExercise(id) {
       var selectorID = "#" + id.toString();
-      if ($('#view').val() !== "-1") {
+      if ($('#view').val() != -1) {
         // console.log(id);
         if ($(selectorID).css("background-color") === 'rgb(50, 205, 50)') {
           $(selectorID).css("background-color", "white");
@@ -637,7 +639,7 @@ $id = $_SESSION['id'];
     });
 
     function mouseOver(id){
-      if ($('#view').val() === "-1") {
+      if ($('#view').val() == -1) {
         let img = "Resources/close.png";
         let imgID = "#img" + id.toString();
         $(imgID).attr("src",img);
@@ -645,14 +647,14 @@ $id = $_SESSION['id'];
     }
 
     function mouseOut(id, img){
-      if ($('#view').val() === "-1") {
+      if ($('#view').val() == -1) {
         let imgID = "#img" + id.toString();
         $(imgID).attr("src",img);
       }
     }
 
     function deleteExercise(id){
-      if ($('#view').val() === "-1") {
+      if ($('#view').val() == -1) {
         $.ajax({
             type: "POST",
             url: "db_manager.php",
